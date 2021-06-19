@@ -2,8 +2,12 @@
 (require 'cl)
 
 ;;optimise loading package
-(setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")))
+(setq package-archives
+    '(("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+      ("org"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+      ("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
 
+(setq pacakge-check-signature nil)
 
 ;;add whatever packages you want here
  (defvar brodyliao/packages '(
@@ -20,8 +24,9 @@
 		;; --- Minor Mode ---
 		nodejs-repl
 		exec-path-from-shell
+	  reveal-in-osx-finder 	
 		;; --- Themes ---
-a		gruvbox-theme
+    gruvbox-theme
 		;; solarized-theme
 		) "Default packages")
 
