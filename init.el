@@ -1,69 +1,14 @@
-;;optiise loading package
-(when (>= emacs-major-version 24)
-(require 'package)
 (package-initialize)
-(setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
-			 ("melpa" . "http://elpa.emacs-china.org/melpa/"))))
-;; cl - Common Lisp Extension
-(require 'cl)
 
-;;add whatever packages you want here
- (defvar brodyliao/packages '(
-		;; --- Auto-completion ---
-		company
-		;; --- Better Editor ---
-		hungry-delete
-		swiper
-		counsel
-		smartparens
-		;; --- Major Mode ---
-		js2-mode
-		;; --- Minor Mode ---
-		nodejs-repl
-		exec-path-from-shell
-		;; --- Themes ---
-a		gruvbox-theme
-		;; solarized-theme
-		) "Default packages")
+(add-to-list 'load-path "~/.emacs.d/lisp/")
 
-(setq package-selected-packages brodyliao/packages)
-
- (defun brodyliao/packages-installed-p ()
-     (loop for pkg in brodyliao/packages
-	   when (not (package-installed-p pkg)) do (return nil)
-	   finally (return t)))
-
- (unless (brodyliao/packages-installed-p)
-     (message "%s" "Refreshing package database...")
-     (package-refresh-contents)
-     (dolist (pkg brodyliao/packages)
-       (when (not (package-installed-p pkg))
-	 (package-install pkg))))
-
- ;; Find Executable Path on OS X, for exec-path-from-shell
- (when (memq window-system '(mac ns))
-   (exec-path-from-shell-initialize))
+;; Package Management
+;; -----------------------------------------------------------------
+(require 'init-packages)
 
 ;; auto update file
-(global-auto-composition-mode t )
+(global-auto-revert-mode t )
 
-;; config for js2-mode
-(setq auto-mode-alist
-      (append
-       '(("\\.js\\'" . js2-mode))
-       auto-mode-alist))
-
-;; nodejs-repl
-(require 'nodejs-repl)
-
-;; Hungry delete
-(require 'hungry-delete)
-(global-hungry-delete-mode)
-
-;; smartparens
-(require 'smartparens-config)
-;;(add-hook 'emacs-lisp-mode-hook 'smartparens-mode)
-(smartparens-global-mode t)
 
 ;; redefined key
 (global-set-key (kbd "C-h C-f") 'find-function)
@@ -77,10 +22,6 @@ a		gruvbox-theme
 ;; 设置 org-agenda 打开快捷键
 (global-set-key (kbd "C-c a") 'org-agenda)
 
-;; abo-abo/swiper
-(ivy-mode)
-(setq ivy-use-virtual-buffers t)
-(setq enable-recursive-minibuffers t)
 ;; enable this if you want `swiper' to use it
 ;; (setq search-default-mode #'char-fold-to-regexp)
 (global-set-key "\C-s" 'swiper)
@@ -101,9 +42,6 @@ a		gruvbox-theme
 ;;(global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
 ;;(define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
 
-
-;; Theme
-(load-theme 'gruvbox t)
 ;;editor style
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -116,19 +54,27 @@ a		gruvbox-theme
 ;; line number
 (global-linum-mode t)
 
+;;abbrev
+(setq-default abbrev-mode t)
+(define-abbrev-table 'global-abbrev-table '(
+					    ;; Shifu
+					    ("blp" "brodyliao/packages")
+					    ;; Tudi
+					    ("8lxy" "lixinyang")
+					    ))
 ;; custom function
 (defun open-my-init-file()
   (interactive)
   (find-file "~/.emacs.d/init.el"))
 (global-set-key (kbd "<f2>") 'open-my-init-file)
 
-(global-company-mode t)
+
 
 ;; set cursor
 (setq-default cursor-type 'bar)
 
 ;; remove back up
-(setq make-backup-file nil)
+(setq make-backup-files nil)
 (setq auto-save-default nil)
 
 ;; org
@@ -152,19 +98,6 @@ a		gruvbox-theme
 
 ;; highlight current line
 (global-hl-line-mode t )
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
