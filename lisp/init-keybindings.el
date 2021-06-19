@@ -35,5 +35,7 @@
 
 (global-set-key "\C-x\ \C-r" 'recentf-open-files)
 
+(global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
+
 
 (provide 'init-keybindings)
