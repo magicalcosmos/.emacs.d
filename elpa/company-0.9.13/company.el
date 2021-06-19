@@ -528,7 +528,7 @@ backend, consider using the `post-completion' command instead."
 The hook is called with one argument which is either a string or a symbol."
   :type 'hook)
 
-(defcustom company-minimum-prefix-length 3
+(defcustom company-minimum-prefix-length 2
   "The minimum prefix length for idle completion."
   :type '(integer :tag "prefix length"))
 
@@ -590,7 +590,7 @@ A character that is part of a valid candidate never triggers auto-completion."
                       (const :tag "Generic comment fence." ?!))
                  (function :tag "Predicate function")))
 
-(defcustom company-idle-delay .5
+(defcustom company-idle-delay .1
   "The idle delay in seconds until completion starts automatically.
 The prefix still has to satisfy `company-minimum-prefix-length' before that
 happens.  The value of nil means no idle completion."
@@ -599,7 +599,7 @@ happens.  The value of nil means no idle completion."
                  (function :tag "Predicate function")
                  (number :tag "seconds")))
 
-(defcustom company-tooltip-idle-delay .5
+(defcustom company-tooltip-idle-delay .1
   "The idle delay in seconds until tooltip is shown when using
 `company-pseudo-tooltip-unless-just-one-frontend-with-delay'."
   :type '(choice (const :tag "never (nil)" nil)
