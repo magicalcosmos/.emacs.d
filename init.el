@@ -44,6 +44,9 @@ a		gruvbox-theme
  (when (memq window-system '(mac ns))
    (exec-path-from-shell-initialize))
 
+;; auto update file
+(global-auto-composition-mode t )
+
 ;; config for js2-mode
 (setq auto-mode-alist
       (append
@@ -126,6 +129,7 @@ a		gruvbox-theme
 
 ;; remove back up
 (setq make-backup-file nil)
+(setq auto-save-default nil)
 
 ;; org
 (require 'org)
