@@ -40,6 +40,9 @@
 
 (global-set-key (kbd "s-/") 'hippie-expand)
 
+(global-set-key (kbd "C-=") 'er/expand-region)
+
+(global-set-key (kbd "M-s e") 'iedit-mode)
 
 ;; 主动加载 Dired Mode
 ;; (require 'dired)
