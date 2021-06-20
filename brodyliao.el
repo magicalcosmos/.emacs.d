@@ -22,10 +22,6 @@
 ;; -----------------------------------------------------------------
 (require 'init-better-defaults)
 
-;; Keybindings Management
-;; -----------------------------------------------------------------
-(require 'init-keybindings)
-
 ;; Org Management
 ;; -----------------------------------------------------------------
 (require 'init-org)
@@ -33,3 +29,7 @@
 ;;custom file position
 (setq custom-file (expand-file-name "lisp/custom.el" user-emacs-directory))
 (load-file custom-file)
+
+;; Keybindings Management
+;; -----------------------------------------------------------------
+(require 'init-keybindings)

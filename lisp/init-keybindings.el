@@ -50,6 +50,17 @@
 
 ;; 延迟加载
 (with-eval-after-load 'dired
-    (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)) 
+  (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file))
+
+;; 设置 org-agenda 打开快捷键
+(global-set-key (kbd "C-c a") 'org-agenda)
+
+(global-set-key (kbd "C-c r") 'org-capture)
+
+
+(global-set-key (kbd "C-c t i") 'my-toggle-web-indent)
+
+(js2r-add-keybindings-with-prefix "C-c C-m")
+
 
 (provide 'init-keybindings)
