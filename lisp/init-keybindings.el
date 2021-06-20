@@ -74,5 +74,26 @@
 
 (global-set-key (kbd "C-c p s") 'helm-do-ag-project-root)
 
+(global-set-key (kbd "H-w") #'aya-create)
+(global-set-key (kbd "H-y") #'aya-expand)
+
+(global-set-key (kbd "C-w") 'backward-kill-word)
+
+(global-set-key (kbd "C-z") 'evil-toggle-key)
+
+(global-evil-leader-mode 1)
+
+(evil-leader/set-key
+  "ff" 'find-file
+  "bb" 'switch-to-buffer
+  "0"  'select-window-0
+  "1"  'select-window-1
+  "2"  'select-window-2
+  "3"  'select-window-3
+  "w/" 'split-window-right
+  "w-" 'split-window-below
+  ":"  'counsel-M-x
+  "wM" 'delete-other-windows
+  )
 
 (provide 'init-keybindings)

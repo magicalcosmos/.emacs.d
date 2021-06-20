@@ -33,6 +33,12 @@
 			      iedit
 			      org-pomodoro
 			      helm-ag
+			      flycheck
+			      auto-yasnippet
+			      evil
+			      evil-leader
+			      window-numbering
+			      powerline
 		) "Default packages")
 
 (setq package-selected-packages brodyliao/packages)
@@ -79,7 +85,7 @@
 (require 'popwin)
 (popwin-mode t)
 
-(sp-local-pair '(emacs-lisp-mode lisp-interaction-mode) "'" nil :actions nil)
+
 
 ;; web mode
 (setq auto-mode-alist
@@ -99,7 +105,7 @@
 
 (defun my-toggle-web-indent ()
   (interactive)
-  ;; web development
+  ;; web developments
   (if (or (eq major-mode 'js-mode) (eq major-mode 'js2-mode))
       (progn
 	(setq js-indent-level (if (= js-indent-level 2) 4 2))
@@ -117,6 +123,24 @@
 ;; js2 refactor
 (add-hook 'js2-mode-hook #'js2-refactor-mode)
 
+(add-hook 'js2-mode-hook 'flycheck-mode)
+
+(require 'yasnippet)
+(yas-reload-all)
+(add-hook 'prog-mode-hook #'yas-minor-mode)
+
+(sp-local-pair '(emacs-lisp-mode lisp-interaction-mode) "'" nil :actions nil)
+
 (require 'org-pomodoro)
 
+(evil-mode 1)
+(setcdr evil-insert-state-map nil)
+(define-key evil-insert-state-map [escape] 'evil-normal-state)
+
+;; window-numbering-mode
+(window-numbering-mode 1)
+
+;; powerline
+(require 'powerline)
+(powerline-default-theme)
 (provide 'init-packages)
