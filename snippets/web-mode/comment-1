@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: code comments 1
+# key: /*
+# --
+
+/**
+ * $1
+ */

@@ -1,0 +1,20 @@
+{
+  "name": "rust-analyzer",
+  "languageId": "rust",
+  "command": ["rust-analyzer"],
+  "settings": {},
+  "initializationOptions": {
+    "diagnostics": {
+      "enable": true
+    },
+    "cargo": {
+      "autoreload": true,
+      "buildScripts": {
+        "enable": true
+      }
+    },
+    "procMacro": {
+      "enable": true
+    }
+  }
+}
