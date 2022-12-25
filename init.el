@@ -11,6 +11,9 @@
 
 ;; Author: brodyliao
 
+;;在文件最开头添加地个 文件作用域的变量设置，设置变量的绑定方式
+;; -*- lexical-binding: t -*-
+
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -48,11 +51,6 @@
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.5)
 
-; (add-hook 'emacs-startup-hook
-;           (lambda ()
-;             "Recover GC values after startup."
-;             (setq gc-cons-threshold 800000
-;                   gc-cons-percentage 0.1)))
 (let ((normal-gc-cons-threshold (* 20 1024 1024))
       (init-gc-cons-threshold (* 128 1024 1024)))
   (setq gc-cons-threshold init-gc-cons-threshold)
@@ -124,16 +122,22 @@
 
 
 ;; 设置光标样式
-(setq-default cursor-type 'box)
+(setq-default cursor-type 'bar)
 
-
-(electric-pair-mode t)                       ; 自动补全括号
-(add-hook 'prog-mode-hook #'show-paren-mode) ; 编程模式下，光标在括号上时高亮另一个括号
-(column-number-mode t)                       ; 在 Mode line 上显示列号
-(delete-selection-mode t)                    ; 选中文本后输入文本会替换文本（更符合我们习惯了的其它编辑器的逻辑）
-(add-hook 'prog-mode-hook #'hs-minor-mode)   ; 编程模式下，可以折叠代码块
-(when (display-graphic-p) (toggle-scroll-bar -1)) ; 图形界面时关闭滚动条
-(global-set-key (kbd "C-c '") 'comment-or-uncomment-region) ; 为选中的代码加注释/去注释
+;; 自动补全括号
+(electric-pair-mode t)    
+;; 编程模式下，光标在括号上时高亮另一个括号                   
+(add-hook 'prog-mode-hook #'show-paren-mode) 
+;; 在 Mode line 上显示列号
+(column-number-mode t)
+;; 选中文本后输入文本会替换文本（更符合我们习惯了的其它编辑器的逻辑）                       
+(delete-selection-mode t)
+;; 编程模式下，可以折叠代码块                    
+(add-hook 'prog-mode-hook #'hs-minor-mode)   
+;; 图形界面时关闭滚动条
+(when (display-graphic-p) (toggle-scroll-bar -1)) 
+;; 为选中的代码加注释/去注释
+(global-set-key (kbd "C-c '") 'comment-or-uncomment-region) 
 
 
 ;; remove cl warning
@@ -200,10 +204,11 @@
 
 ;; Set frame transparency and maximize windows by default.
 (set-frame-parameter (selected-frame) 'alpha '(90 . 90))
-(add-to-list 'default-frame-alist '(alpha . (90 . 90)))
-(set-frame-parameter (selected-frame) 'fullscreen 'maximized)
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
-(add-to-list 'default-frame-alist '(fullscreen . fullheight))
+;; (add-to-list 'default-frame-alist '(alpha . (90 . 90)))
+;; (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
+;; (add-to-list 'initial-frame-alist '(fullscreen . maximized))
+;; (add-to-list 'default-frame-alist '(fullscreen . fullheight))
+(toggle-frame-maximized)
 
 ;; The default is 800 kilobytes.  Measured in bytes.
 (setq gc-cons-threshold most-positive-fixnum)
@@ -257,6 +262,120 @@
 (package-refresh-contents)
 (package-install 'use-package))
 (setq use-package-always-ensure t)
+
+
+(package-install 'vertico)
+(vertico-mode t)
+
+(package-install 'orderless)
+(setq completion-styles '(orderless))
+
+(package-install 'marginalia)
+(marginalia-mode t)
+
+(package-install 'embark)
+(global-set-key (kbd "C-;") 'embark-act)
+(setq prefix-help-command 'embark-prefix-help-command)
+
+(package-install 'consult)
+;;replace swiper
+(global-set-key (kbd "C-s") 'consult-line)
+;;consult-imenu
+(global-set-key (kbd "M-s i") 'consult-imenu)
+
+(require 'recentf)
+(recentf-mode 1)
+(setq recentf-max-menu-item 10)
+
+
+;; 这个快捷键绑定可以用之后的插件 counsel 代替
+;; (global-set-key (kbd "C-x C-r") 'recentf-open-files)
+(global-set-key (kbd "C-x b") 'consult-buffer)
+
+
+(delete-selection-mode 1)
+;; find-function （ C-h C-f ）
+(global-set-key (kbd "C-h C-f") 'find-function)
+;; find-variable （ C-h C-v ）
+(global-set-key (kbd "C-h C-v ") 'find-variable)
+;; find-function-on-key （ C-h C-k ）
+(global-set-key (kbd "C-h C-k") 'find-function-on-key)
+
+
+(defun consult-directory-externally (file)
+  "Open FILE externally using the default application of the system."
+  (interactive "fOpen externally: ")
+  (if (and (eq system-type 'windows-nt)
+	   (fboundp 'w32-shell-execute))
+      (shell-command-to-string (encode-coding-string (replace-regexp-in-string "/" "\\\\"
+	    (format "explorer.exe %s" (file-name-directory (expand-file-name file)))) 'gbk))
+    (call-process (pcase system-type
+		    ('darwin "open")
+		    ('cygwin "cygstart")
+		    (_ "xdg-open"))
+		  nil 0 nil
+		  (file-name-directory (expand-file-name file)))))
+
+ (define-key embark-file-map (kbd "E") #'consult-directory-externally)
+;;打开当前文件的目录
+(defun my-open-current-directory ()
+  (interactive)
+  (consult-directory-externally default-directory))
+
+
+(package-install 'embark-consult)
+(package-install 'wgrep)
+(setq wgrep-auto-save-buffer t)
+
+(eval-after-load
+    'consult
+  '(eval-after-load
+       'embark
+     '(progn
+	(require 'embark-consult)
+	(add-hook
+	 'embark-collect-mode-hook
+	 #'consult-preview-at-point-mode))))
+
+(defun embark-export-write ()
+  "Export the current vertico results to a writable buffer if possible.
+Supports exporting consult-grep to wgrep, file to wdeired, and consult-location to occur-edit"
+  (interactive)
+  (require 'embark)
+  (require 'wgrep)
+  (pcase-let ((`(,type . ,candidates)
+               (run-hook-with-args-until-success 'embark-candidate-collectors)))
+    (pcase type
+      ('consult-grep (let ((embark-after-export-hook #'wgrep-change-to-wgrep-mode))
+                       (embark-export)))
+      ('file (let ((embark-after-export-hook #'wdired-change-to-wdired-mode))
+               (embark-export)))
+      ('consult-location (let ((embark-after-export-hook #'occur-edit-mode))
+                           (embark-export)))
+      (x (user-error "embark category %S doesn't support writable export" x)))))
+
+(global-set-key minibuffer-local-map (kbd "C-c C-e") 'embark-export-write)
+
+;;使用ripgrep来进行搜索
+;;consult-ripgrep
+
+;;everyting
+;;consult-locate
+;; 配置搜索中文
+(progn
+  (setq consult-locate-args (encode-coding-string "es.exe -i -p -r" 'gbk))
+  (add-to-list 'process-coding-system-alist '("es" gbk . gbk))
+  )
+(eval-after-load 'consult
+  (progn
+      (setq
+	consult-narrow-key "<"
+	consult-line-numbers-widen t
+	consult-async-min-input 2
+	consult-async-refresh-delay  0.15
+	consult-async-input-throttle 0.2
+	consult-async-input-debounce 0.1)
+    ))
 
 
 
@@ -315,21 +434,21 @@
 (defconst *is-windows* (or (eq system-type 'ms-dos)(eq system-type 'windows-nt)))
 (defconst CACHE-DIR (expand-file-name "cache/" user-emacs-directory))
 
-(add-to-list 'load-path "~/.emacs.d/etc/lisp")
-(add-to-list 'load-path "~/.emacs.d/etc/lisp/lsp-bridge")
-(add-to-list 'load-path "~/.emacs.d/etc/lisp/cape")
-(add-to-list 'load-path "~/.emacs.d/etc/lisp/emacs-forfu-terminal")
-(add-to-list 'load-path "~/.emacs.d/etc/core")
-(add-to-list 'load-path "~/.emacs.d/theme")
+;; (add-to-list 'load-path "~/.emacs.d/etc/lisp")
+;; (add-to-list 'load-path "~/.emacs.d/etc/lisp/lsp-bridge")
+;; (add-to-list 'load-path "~/.emacs.d/etc/lisp/cape")
+;; (add-to-list 'load-path "~/.emacs.d/etc/lisp/emacs-forfu-terminal")
+;; (add-to-list 'load-path "~/.emacs.d/etc/core")
+;; (add-to-list 'load-path "~/.emacs.d/theme")
 
 
-(load-file (expand-file-name "init-early.el" user-emacs-directory))
+;; (load-file (expand-file-name "init-early.el" user-emacs-directory))
 
-(use-package mwim
-  :ensure t
-  :bind
-  ("C-a" . mwim-beginning-of-code-or-line)
-  ("C-e" . mwim-end-of-code-or-line))
+;; (use-package mwim
+;;   :ensure t
+;;   :bind
+;;   ("C-a" . mwim-beginning-of-code-or-line)
+;;   ("C-e" . mwim-end-of-code-or-line))
 
 ;; user custom config
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
@@ -339,12 +458,26 @@
 
 ;; command key to meta for default
 (when *is-mac*
-   (setq mac-command-modifier 'meta
-    mac-option-modifier 'none))
+  (setq mac-option-modifier 'meta
+      mac-command-modifier 'super))
+
+;; 对应Windows上面的Ctrl-a 全选
+(global-set-key (kbd "s-a") 'mark-whole-buffer) 
+;; 对应Windows上面的Ctrl-c 复制
+(global-set-key (kbd "s-c") 'kill-ring-save) 
+;; 对应Windows上面的Ctrl-s 保存
+(global-set-key (kbd "s-s") 'save-buffer) 
+;; 对应Windows上面的Ctrl-v 粘贴
+(global-set-key (kbd "s-v") 'yank) 
+;; 对应Windows上面的Ctrol-z 撤销
+(global-set-key (kbd "s-z") 'undo) 
+;; 对应Windows上面的Ctrol-x 剪切
+(global-set-key (kbd "s-x") 'kill-region) 
 
 ;; Tab Widths
 (setq-default tab-width 2)
 (setq-default evil-shift-width tab-width)
+(setq tab-always-indent 'complete)
 ;; Use spaces instead of tabs for indentation
 (setq-default indent-tabs-mode nil)
 
@@ -355,7 +488,7 @@
 (global-auto-revert-mode t)
 
 ;(global-set-key (kbd "C-x C-b") 'bufler)
-(global-set-key (kbd "C-x C-b") 'projectile-ibuffer)
+;; (global-set-key (kbd "C-x C-b") 'projectile-ibuffer)
 
 ;; Use no-littering to automatically set common paths to the new user-emacs-directory
 (use-package no-littering)
@@ -381,3 +514,13 @@
 (defun show-in-finder ()
   (interactive)
   (shell-command (concat "open -R " buffer-file-name)))
+
+
+
+;; 快速打开配置文件
+(defun open-init-file()
+  (interactive)
+  (find-file "~/.emacs.d/init.el"))
+
+;; 这一行代码，将函数 open-init-file 绑定到 <f2> 键上
+(global-set-key (kbd "<f2>") 'open-init-file)
