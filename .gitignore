@@ -6,3 +6,11 @@ straight
 var
 .cache
 recentf
+history
+transient
+places
+projects
+straight
+.lsp*
+quelpa
+custom.el

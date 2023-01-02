@@ -1,3 +1,16 @@
+;;; init-helm-xref.lsp --- Load the full configuration -*- lexical-binding: t -*-
+;;; Commentary:
+
+;; This file bootstraps the configuration, which is divided into
+;; a number of other files.
+
+;;; Code:
+
+;; Produce backtraces when errors occur: can be helpful to diagnose startup issues
+;;(setq debug-on-error t)
+
+;; Author: brodyliao
+
 (use-package helm-lsp
   :ensure t)
 
@@ -6,14 +19,5 @@
 (define-key global-map [remap find-file] #'helm-find-files)
 (define-key global-map [remap execute-extended-command] #'helm-M-x)
 (define-key global-map [remap switch-to-buffer] #'helm-mini)
-
-
-
-
-;; (bl/leader-key-def
-;; "f"   '(:ignore t :which-key "files")
-;; "ff"  '(helm-find-files :which-key "open file")
-;; "fr"  '(helm-recentf :which-key "recent files")
-;; "fR"  '(revert-buffer :which-key "revert file"))
 
 (provide 'init-helm-lsp)

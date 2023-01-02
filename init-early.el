@@ -1,20 +1,42 @@
+;;; init.el --- Load the full configuration -*- lexical-binding: t -*-
+;;; Commentary:
+
+;; This file bootstraps the configuration, which is divided into
+;; a number of other files.
+
+;;; Code:
+
+;; Produce backtraces when errors occur: can be helpful to diagnose startup issues
+;;(setq debug-on-error t)
+
+;; Author: brodyliao
+
 (require 'cc-mode)
 
+(require 'init-const)
+
+(require 'init-funcs)
+
+(require 'init-basic)
+
+(require 'init-packages)
+
+(require 'init-quelpa)
 
 (require 'init-general)
 
 ;; config as below is from https://github.com/emacs-lsp/lsp-mode/blob/master/docs/tutorials/reactjs-tutorial.md
-;; (require 'init-lsp-mode)
-;; (require 'init-lsp-treemacs)
-;; (require 'init-yasnippet)
+(require 'init-lsp-mode)
+(require 'init-lsp-treemacs)
+(require 'init-yasnippet)
 ;; (require 'init-helm-lsp)
 ;; (require 'init-helm-xref)
 ;; (require 'init-hydra)
-;; (require 'init-flycheck)
+(require 'init-flycheck)
+
 (require 'init-company)
 ;; (require 'init-avy)
-;; (require 'init-which-key)
-;; (require 'init-helm-xref)
+(require 'init-which-key)
 ;; (require 'init-dap-mode)
 ;; (require 'init-json-mode)
 ;; (require 'init-auto-package-update)
@@ -26,22 +48,22 @@
 
 
 
-;; (require 'init-icons)
+(require 'init-icons)
 
   ;;(require 'init-persp-projectile)
 ;; (require 'init-projectile)
 
-;; (require 'init-theme)
+(require 'init-theme)
 ;; (require 'init-dashboard)
 
 
-;; (require 'init-undo-tree)
-;; (require 'init-evil)
-;; (require 'init-magit)
+(require 'init-undo-tree)
+(require 'init-evil)
+(require 'init-magit)
 
 
-;; (require 'init-treemacs)
-;; (require 'init-ace-window)
+(require 'init-treemacs)
+(require 'init-ace-window)
 ;; (require 'init-drag-stuff)
 
 
@@ -65,12 +87,17 @@
 
 ;; (require 'init-fzf)
 ;; (require 'init-vterm)
-;; (require 'init-embark)
 
 ;; (require 'init-dired)
 ;; (require 'init-org-roam)
 
 (require 'init-vertico)
-;; (require 'init-orderless)
-;; (require 'init-consult)
-;; (require 'init-lsp-volar)
+
+(require 'init-orderless)
+
+(require 'init-embark)
+
+(require 'init-consult)
+(require 'init-lsp-volar)
+(require 'init-keybindings)
+

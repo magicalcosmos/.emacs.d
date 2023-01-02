@@ -4,7 +4,7 @@
   :config
   (setq typescript-indent-level 2))
 
-(defun dw/set-js-indentation ()
+(defun bl/set-js-indentation ()
   (setq js-indent-level 2)
   (setq evil-shift-width js-indent-level)
   (setq-default tab-width 2))
@@ -19,8 +19,8 @@
   (setq js2-mode-show-strict-warnings nil)
 
   ;; Set up proper indentation in JavaScript and JSON files
-  (add-hook 'js2-mode-hook #'dw/set-js-indentation)
-  (add-hook 'json-mode-hook #'dw/set-js-indentation))
+  (add-hook 'js2-mode-hook #'bl/set-js-indentation)
+  (add-hook 'json-mode-hook #'bl/set-js-indentation))
 
 
 (use-package apheleia

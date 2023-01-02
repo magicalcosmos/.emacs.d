@@ -1,4 +1,5 @@
-;;; init-yasnippet.el --- Load the full configuration -*- lexical-binding: t -*-
+
+;;; init-pdf-tools.el --- Load the full configuration -*- lexical-binding: t -*-
 ;;; Commentary:
 
 ;; This file bootstraps the configuration, which is divided into
@@ -10,9 +11,6 @@
 ;;(setq debug-on-error t)
 
 ;; Author: brodyliao
-(use-package yasnippet
-  :ensure t
-  :hook ((lsp-mode . yas-minor-mode)))
 
 
-(provide 'init-yasnippet)
+(provide 'init-pdf-tools)

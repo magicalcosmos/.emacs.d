@@ -1,20 +1,15 @@
-(defun bl/evil-hook ()
-  (dolist (mode '(custom-mode
-                  eshell-mode
-                  git-rebase-mode
-                  erc-mode
-                  circe-server-mode
-                  circe-chat-mode
-                  circe-query-mode
-                  sauron-mode
-                  term-mode))
-  (add-to-list 'evil-emacs-state-modes mode)))
+;;; init-evil.el --- Load the full configuration -*- lexical-binding: t -*-
+;;; Commentary:
 
+;; This file bootstraps the configuration, which is divided into
+;; a number of other files.
 
-(defun bl/dont-arrow-me-bro ()
-(interactive)
-(message "Arrow keys are bad, you know?"))
+;;; Code:
 
+;; Produce backtraces when errors occur: can be helpful to diagnose startup issues
+;;(setq debug-on-error t)
+
+;; Author: brodyliao
 
 (use-package evil
   :init
@@ -63,9 +58,5 @@
   (setq evil-collection-mode-list
         (remove 'lispy evil-collection-mode-list))
   (evil-collection-init))
-  
-;; Emacs key bindings
-(global-set-key (kbd "M-/") 'evilnc-comment-or-uncomment-lines)
-
 
 (provide 'init-evil)
