@@ -24,6 +24,7 @@
   (lsp-completion-provider :none) ;; 阻止 lsp 重新设置 company-backend 而覆盖我们 yasnippet 的设置
   (lsp-headerline-breadcrumb-enable t)
   (lsp-treemacs-sync-mode 1)
+  (lsp-completion-enable nil)
   :bind (
     ("C-c l" . lsp-command-map)
     ("C-c d" . lsp-describe-thing-at-point)
@@ -33,7 +34,14 @@
    (go-mode . lsp-deferred)
    (js-mode . lsp-deferred)
    (json-mode . lsp-deferred)
+   (css-mode . lsp-deferred)
    (html-mode . lsp-deferred)
+   (python-mode . lsp-deferred)
+   (c-mode . lsp-deferred)
+   (typescript-mode . lsp-deferred)
+   (ymal-mode . lsp-deferred)
+   (shell-mode . lsp-deferred)
+   (dockerfile-mode . lsp-deferred)
    (vue-mode . lsp-deferred)
    (web-mode . lsp-deferred)
    (lsp-mode . lsp-enable-which-key-integration)
@@ -48,13 +56,13 @@
   ;; (setq lsp-eldoc-render-all t)
 
   (add-hook 'prog-mode-hook #'lsp)
-  ;; (add-hook 'go-mode-hook #'lsp)
+  (add-hook 'go-mode-hook #'lsp)
   (add-hook 'python-mode-hook #'lsp)
   (add-hook 'c++-mode-hook #'lsp)
   (add-hook 'c-mode-hook #'lsp)
   (add-hook 'rust-mode-hook #'lsp)
-  ;; (add-hook 'html-mode-hook #'lsp)
-  ;; (add-hook 'js-mode-hook #'lsp)
+  (add-hook 'html-mode-hook #'lsp)
+  (add-hook 'js-mode-hook #'lsp)
   (add-hook 'typescript-mode-hook #'lsp)
   (add-hook 'json-mode-hook #'lsp)
   (add-hook 'yaml-mode-hook #'lsp)
@@ -62,12 +70,18 @@
   (add-hook 'shell-mode-hook #'lsp)
   (add-hook 'css-mode-hook #'lsp)
   (add-hook 'scss-mode-hook #'lsp)
-  ;; (add-hook 'vue-mode-hook #'lsp)
+  (add-hook 'vue-mode-hook #'lsp)
+  (lsp-register-client
+   (make-lsp-client :new-connection (lsp-stdio-connection "pyls")
+                    :major-modes '(python-mode)
+                    :server-id 'pyls))
+  (setq company-minimum-prefix-length 1
+        company-idle-delay 0.500) ;; default is 0.2
+  (require 'lsp-clients) 
 )
 
-
 (use-package lsp-ui
-  :straight t
+  :ensure t
   :custom-face
   (lsp-ui-doc-background ((t (:background nil))))
   :init (setq lsp-enable-snippet nil

@@ -65,6 +65,7 @@
 ;;(require 'init-lsp)
 
 (require 'init-treemacs)
+;; (require 'init-window)
 (require 'init-ace-window)
 ;; (require 'init-drag-stuff)
 
@@ -106,4 +107,5 @@
 (require 'init-keybindings)
 
 ;; (require 'init-quelpa)
+
 
