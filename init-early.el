@@ -21,13 +21,14 @@
 
 (require 'init-packages)
 
-(require 'init-quelpa)
-
 (require 'init-general)
 
 ;; config as below is from https://github.com/emacs-lsp/lsp-mode/blob/master/docs/tutorials/reactjs-tutorial.md
 (require 'init-lsp-mode)
 (require 'init-lsp-treemacs)
+
+(require 'init-syntaxcheck)
+
 (require 'init-yasnippet)
 ;; (require 'init-helm-lsp)
 ;; (require 'init-helm-xref)
@@ -61,6 +62,7 @@
 (require 'init-evil)
 (require 'init-magit)
 
+;;(require 'init-lsp)
 
 (require 'init-treemacs)
 (require 'init-ace-window)
@@ -71,7 +73,7 @@
 
 ;; (require 'init-separedit)
 
-;; (require 'init-web)
+(require 'init-web)
 
 ;; (require 'init-swiper-ivy-counsel)
 
@@ -98,6 +100,10 @@
 (require 'init-embark)
 
 (require 'init-consult)
-(require 'init-lsp-volar)
+
+;; (require 'init-lsp-volar)
+
 (require 'init-keybindings)
+
+;; (require 'init-quelpa)
 

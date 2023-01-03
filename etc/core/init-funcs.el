@@ -85,8 +85,19 @@ Supports exporting consult-grep to wgrep, file to wdeired, and consult-location 
   (interactive)
   (shell-command (concat "open -R " buffer-file-name)))
   
+(defun update-load-path (&rest _)
+  "Update `load-path'."
+  (dolist (dir '("etc/lisp" "etc/core" "theme"))
+    (push (expand-file-name dir user-emacs-directory) load-path)))
 
+(defun add-subdirs-to-load-path (&rest _)
+  "Add subdirectories to `load-path'."
+  (let ((default-directory (expand-file-name "etc/lisp" user-emacs-directory)))
+    (normal-top-level-add-subdirs-to-load-path)))
 
+(advice-add #'package-initialize :after #'update-load-path)
+(advice-add #'package-initialize :after #'add-subdirs-to-load-path)
 
+(update-load-path) 
 
 (provide 'init-funcs)

@@ -121,11 +121,16 @@
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.5)
 
-(let ((normal-gc-cons-threshold (* 20 1024 1024))
-      (init-gc-cons-threshold (* 128 1024 1024)))
-  (setq gc-cons-threshold init-gc-cons-threshold)
-  (add-hook 'emacs-startup-hook
-            (lambda () (setq gc-cons-threshold normal-gc-cons-threshold))))
+;; (let ((normal-gc-cons-threshold (* 20 1024 1024))
+;;       (init-gc-cons-threshold (* 128 1024 1024)))
+;;   (setq gc-cons-threshold init-gc-cons-threshold)
+;;   (add-hook 'emacs-startup-hook
+;;             (lambda () (setq gc-cons-threshold normal-gc-cons-threshold))))
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            "Recover GC values after startup."
+            (setq gc-cons-threshold 80000000
+                  gc-cons-percentage 0.1)))
 
 
 ;; Silence compiler warnings as they can be pretty disruptive
@@ -151,10 +156,11 @@
 
 
 ;; command key to meta for default
+;; (when *is-mac*
+;;   (setq mac-option-modifier 'meta
+;;       mac-command-modifier 'none))
 (when *is-mac*
-  (setq mac-option-modifier 'meta
-      mac-command-modifier 'super))
-
+   (setq mac-command-modifier 'meta))
 
 
 ;; 设置平滑滚动
