@@ -65,8 +65,15 @@
 (use-package evil
   :ensure t
   :init
+  (setq evil-want-fine-undo t)
+  (setq-default evil-shift-width 2)
+  (setq-default tab-width 2)
   (setq evil-want-keybinding nil)
+  (setq evil-want-integration t)
   (setq evil-want-C-u-scroll t)
+  (setq evil-want-C-i-jump nil)
+  (setq evil-respect-visual-line-mode t)
+  (setq evil-undo-system 'undo-tree)
   (evil-mode)
 
   ;; https://emacs.stackexchange.com/questions/46371/how-can-i-get-ret-to-follow-org-mode-links-when-using-evil-mode

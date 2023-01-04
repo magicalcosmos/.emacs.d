@@ -240,7 +240,7 @@
 (setq default-buffer-file-coding-system 'utf-8)
 
 ;; Set font size 180 = 18pt
-(set-face-attribute 'default nil :height 140)
+(set-face-attribute 'default nil :height 160)
 
 (require 'package)
 ;;optimise loading package

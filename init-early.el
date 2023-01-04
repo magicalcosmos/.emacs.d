@@ -58,7 +58,7 @@
 ;; (require 'init-dashboard)
 
 
-(require 'init-undo-tree)
+;; (require 'init-undo-tree)
 (require 'init-evil)
 (require 'init-magit)
 
@@ -91,7 +91,7 @@
 ;; (require 'init-fzf)
 ;; (require 'init-vterm)
 
-;; (require 'init-dired)
+(require 'init-dired)
 ;; (require 'init-org-roam)
 
 (require 'init-vertico)
