@@ -58,7 +58,7 @@
 ;; (require 'init-dashboard)
 
 
-;; (require 'init-undo-tree)
+(require 'init-undo-tree)
 (require 'init-evil)
 (require 'init-magit)
 
