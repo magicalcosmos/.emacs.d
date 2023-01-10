@@ -19,9 +19,14 @@
   :init
   (global-company-mode t)
   :config
+  ;; Number the candidates (use M-1, M-2 etc to select completions).
+  (setq company-show-numbers t)
   (setq company-minimum-prefix-length 1)
+  ;; Trigger completion immediately.
   (setq company-idle-delay 0))
 
+(use-package company-tabnine :ensure t)
+(add-to-list 'company-backends #'company-tabnine)
 
 (setq tab-always-indent 'complete)
 
