@@ -1,4 +1,5 @@
 (require 'lsp-bridge)
+(setq +format-with-lsp nil)
 (setq lsp-bridge-enable-log nil)
 (global-lsp-bridge-mode)
 

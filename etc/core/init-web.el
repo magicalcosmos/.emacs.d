@@ -16,8 +16,6 @@
 :commands web-mode
 :mode (
   ("\\.html?\\'" . web-mode)
-  ("\\.jsx?\\'" . web-mode)
-  ("\\.tsx?\\'" . web-mode)
   ("\\.vue?\\'" . web-mode)
 )
 :config

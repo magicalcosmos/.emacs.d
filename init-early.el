@@ -43,7 +43,7 @@
 ;; (require 'init-auto-package-update)
 ;; ;; new config
 ;; (require 'color-rg)
-;; (require 'init-js-doc)
+(require 'init-js-doc)
 
 ;; (require 'init-rg)
 
@@ -51,7 +51,7 @@
 
 (require 'init-icons)
 
-  ;;(require 'init-persp-projectile)
+;; (require 'init-persp-projectile)
 ;; (require 'init-projectile)
 
 (require 'init-theme)
@@ -91,7 +91,7 @@
 ;; (require 'init-fzf)
 ;; (require 'init-vterm)
 
-(require 'init-dired)
+;; (require 'init-dired)
 ;; (require 'init-org-roam)
 
 (require 'init-vertico)
