@@ -48,7 +48,7 @@
   (embark-collect-mode . consult-preview-at-point-mode))
 
 
-(package-install 'wgrep)
+(use-package wgrep)
 (setq wgrep-auto-save-buffer t)
 
 (eval-after-load

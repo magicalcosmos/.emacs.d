@@ -11,7 +11,7 @@
 
 ;; Author: brodyliao
 
-(package-install 'vertico)
+(use-package vertico)
 (vertico-mode t)
 
 (provide 'init-vertico)
