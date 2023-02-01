@@ -22,10 +22,10 @@
   (add-hook 'js2-mode-hook #'bl/set-js-indentation)
   (add-hook 'json-mode-hook #'bl/set-js-indentation))
 
-
-(use-package apheleia
-  :config
-  (apheleia-global-mode +1))
+;; 格式化代码，目前没有解决function之前的空格
+;; (use-package apheleia
+;;   :config
+;;   (apheleia-global-mode +1))
 
 (use-package prettier-js
   ;; :hook ((js2-mode . prettier-js-mode)
