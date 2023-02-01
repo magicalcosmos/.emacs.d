@@ -19,7 +19,18 @@
 ;; (setq visual-fill-column-width 110
 ;;       visual-fill-column-center-text t))
 
-(use-package solarized-theme)
-(load-theme 'solarized-light t)
+;; (use-package solarized-theme)
+;; (load-theme 'solarized-light t)
+
+(use-package modus-themes)
+
+;; modus-operandi
+;; modus-operandi-tinted
+;; modus-operandi-deuteranopia
+;; modus-vivendi
+;; modus-vivendi-tinted
+;; modus-vivendi-deuteranopia
+
+(load-theme 'modus-operandi t)
 
 (provide 'init-theme)
