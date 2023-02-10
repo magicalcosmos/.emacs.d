@@ -129,8 +129,10 @@
 (add-hook 'emacs-startup-hook
           (lambda ()
             "Recover GC values after startup."
-            (setq gc-cons-threshold 80000000
+            (setq gc-cons-threshold 100000000
                   gc-cons-percentage 0.1)))
+; gain the emacs default is too low 4k considering that the some of the language server responses are in 800k - 3M range                 
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
 
 
 ;; Silence compiler warnings as they can be pretty disruptive

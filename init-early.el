@@ -23,13 +23,16 @@
 
 (require 'init-general)
 
+(require 'init-yasnippet)
+
 ;; config as below is from https://github.com/emacs-lsp/lsp-mode/blob/master/docs/tutorials/reactjs-tutorial.md
 (require 'init-lsp-mode)
+
+;; (require 'init-lsp-bridge)
 (require 'init-lsp-treemacs)
 
 (require 'init-syntaxcheck)
 
-(require 'init-yasnippet)
 ;; (require 'init-helm-lsp)
 ;; (require 'init-helm-xref)
 ;; (require 'init-hydra)

@@ -12,7 +12,7 @@
   ;; what to use when checking on-save. "check" is default, I prefer clippy
   (lsp-rust-analyzer-cargo-watch-command "clippy")
   (lsp-eldoc-render-all t)
-  (lsp-idle-delay 0.5)
+  (lsp-idle-delay 0.500)
   ;; enable / disable the hints as you prefer:
   (lsp-rust-analyzer-server-display-inlay-hints t)
   (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
@@ -88,7 +88,7 @@
               lsp-ui-sideline-enable nil
               lsp-ui-peek-enable nil
 
-
+e
               lsp-ui-doc-enable t
               lsp-ui-doc-position              'at-point
               lsp-ui-doc-header                nil
@@ -126,5 +126,17 @@
 (setq lsp-prefer-capf t)
 
 
+(with-eval-after-load 'lsp-mode
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.vscode\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.cache\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\node_modules\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.log\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.history\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.husky\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.tmp\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\static\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\dist\\'")
+  ;; or
+  (add-to-list 'lsp-file-watch-ignored-files "[/\\\\]\\.*\\'"))
   
 (provide 'init-lsp-mode)
