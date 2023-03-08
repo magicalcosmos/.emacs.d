@@ -12,7 +12,9 @@
 ;; Author: brodyliao
 
 ;; Example configuration for Consult
-(use-package consult)
+(use-package consult
+  :bind ("C-c r e" . consult-grep)
+)
 
 (eval-after-load 'consult
   (progn

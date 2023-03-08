@@ -12,6 +12,11 @@
 
 ;; Author: brodyliao
 
+
+(when (and (display-graphic-p) (= (display-screens) 2))
+  (make-frame)
+  (set-frame-position (selected-frame) 1440 0))
+
 (setq inhibit-startup-screen t)
 
 ;; Speed up startup
@@ -23,7 +28,9 @@
 ;; (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
 ;; (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 ;; (add-to-list 'default-frame-alist '(fullscreen . fullheight))
-(toggle-frame-maximized)
+;; (toggle-frame-maximized)
+;; Start maximised (cross-platf)
+(add-hook 'window-setup-hook 'toggle-frame-maximized t)
 
 ;; 设置自动加载已修改文件
 (global-auto-revert-mode t)
@@ -162,7 +169,11 @@
 ;;   (setq mac-option-modifier 'meta
 ;;       mac-command-modifier 'none))
 (when *is-mac*
-   (setq mac-command-modifier 'meta))
+  (setq mac-command-modifier 'meta) ; make cmd key do Meta
+  (setq mac-option-modifier 'hyper) ; make opt key do Super
+  ;(setq mac-control-modifier 'control) ; make Control key do Control
+  ; (setq ns-function-modifier 'hyper)  ; make Fn key do Hyper
+)
 
 
 ;; 设置平滑滚动

@@ -97,6 +97,8 @@
 ;; (require 'init-dired)
 ;; (require 'init-org-roam)
 
+;; (require 'init-popwin)
+
 (require 'init-vertico)
 
 (require 'init-orderless)
@@ -110,5 +112,8 @@
 (require 'init-keybindings)
 
 ;; (require 'init-quelpa)
+(require 'init-ranger)
 
-
+(when (and (display-graphic-p) (= (display-screens) 3))
+  (make-frame)
+  (set-frame-position (selected-frame) 1440 2560))
