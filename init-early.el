@@ -114,6 +114,16 @@
 ;; (require 'init-quelpa)
 (require 'init-ranger)
 
+;; (require 'copilot)
+;; (add-hook 'prog-mode-hook 'copilot-mode)
+
+;; (with-eval-after-load 'company
+;;   ;; disable inline previews
+;;   (delq 'company-preview-if-just-one-frontend company-frontends))
+  
+;; (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
+;; (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
+
 (when (and (display-graphic-p) (= (display-screens) 3))
   (make-frame)
   (set-frame-position (selected-frame) 1440 2560))

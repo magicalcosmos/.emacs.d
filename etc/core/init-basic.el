@@ -115,6 +115,8 @@
 
 (setq create-lockfiles nil)
 
+(setq dired-dwim-target t)
+
 ;; set font size
 (set-default-coding-systems 'utf-8)
 (prefer-coding-system 'utf-8)
