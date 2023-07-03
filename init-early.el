@@ -114,6 +114,8 @@
 ;; (require 'init-quelpa)
 (require 'init-ranger)
 
+(require 'init-dart)
+
 ;; (require 'copilot)
 ;; (add-hook 'prog-mode-hook 'copilot-mode)
 

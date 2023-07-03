@@ -16,6 +16,9 @@
 :commands web-mode
 :mode (
   ("\\.html?\\'" . web-mode)
+  ("\\.ts\\'" . web-mode)
+  ("\\.tsx\\'" . web-mode)
+  ("\\.jsx\\'" . web-mode)
   ("\\.vue?\\'" . web-mode)
 )
 :config
@@ -34,6 +37,13 @@
   (setq web-mode-enable-current-element-highlight t)
   (setq web-mode-enable-current-column-highlight t)
 
+;; typescript
+   (setq web-mode-attr-indent-offset nil)
+   (setq web-mode-tag-auto-close-style 2)
+   (setq web-mode-enable-auto-closing t)
+   (setq tab-width 2)
+   
+
 
   (setq web-mode-engines-alist '(("django"    . "\\.html\\'")))
   (setq web-mode-ac-sources-alist 
@@ -41,7 +51,8 @@
       ("vue" . (ac-source-words-in-buffer ac-source-abbrev))
       ("html" . (ac-source-words-in-buffer ac-source-abbrev))))
   (setq web-mode-enable-engine-detection t)
-  (setq web-mode-enable-auto-closing t)
+  (setq web-mode-enable-auto-pairing t)
+  (setq web-mode-enable-auto-close-style t)
   (setq web-mode-enable-auto-quoting t) ; this fixes the quote problem I mentioned
   (add-hook 'css-mode-hook
       (lambda ()

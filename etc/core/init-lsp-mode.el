@@ -31,7 +31,8 @@
     ("C-c a" . lsp-execute-code-action)
   )
   :hook (
-   (go-mode . lsp-deferred)
+   (go-mode . lsp-deferred)   
+   (dart-mode . lsp-deferred)
    (js-mode . lsp-deferred)
    (json-mode . lsp-deferred)
    (css-mode . lsp-deferred)
@@ -71,6 +72,7 @@
   (add-hook 'css-mode-hook #'lsp)
   (add-hook 'scss-mode-hook #'lsp)
   (add-hook 'vue-mode-hook #'lsp)
+  (add-hook 'dart-mode-hook 'lsp)
   (lsp-register-client
    (make-lsp-client :new-connection (lsp-stdio-connection "pyls")
                     :major-modes '(python-mode)
