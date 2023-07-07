@@ -528,3 +528,5 @@ Supports exporting consult-grep to wgrep, file to wdeired, and consult-location 
 
 ;; 这一行代码，将函数 open-init-file 绑定到 <f2> 键上
 (global-set-key (kbd "<f2>") 'open-init-file)
+
+(set-face-attribute 'web-mode-css-rule-face nil :foreground "Pink3")

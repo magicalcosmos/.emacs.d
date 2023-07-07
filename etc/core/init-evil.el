@@ -236,5 +236,10 @@
 ;;   (evil-snipe-mode +1)
 ;;   (evil-snipe-override-mode +1))
 
+(defalias 'forward-evil-word 'forward-evil-symbol)
+
+
+;; How to treat underscore as part of the word?
+;; (add-hook 'prog-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
 
 (provide 'init-evil)
