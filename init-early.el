@@ -116,6 +116,9 @@
 
 (require 'init-dart)
 
+(require 'init-go)
+
+(require 'init-python)
 ;; (require 'copilot)
 ;; (add-hook 'prog-mode-hook 'copilot-mode)
 

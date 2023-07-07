@@ -1,6 +1,5 @@
 (use-package lsp-mode
   :ensure t
-  :commands (lsp lsp-deferred)
   :custom
   (lsp-enable-snippet t)
   (lsp-keep-workspace-alive t)
@@ -79,8 +78,14 @@
                     :server-id 'pyls))
   (setq company-minimum-prefix-length 1
         company-idle-delay 0.500) ;; default is 0.2
-  (require 'lsp-clients) 
+  (require 'lsp-clients)
+  :commands (lsp lsp-deferred)
 )
+
+(use-package company-lsp
+  :ensure t
+  :config
+  (push 'company-lsp company-backends))
 
 (use-package lsp-ui
   :ensure t
