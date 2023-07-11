@@ -294,7 +294,7 @@
 
 ;; 这个快捷键绑定可以用之后的插件 counsel 代替
 ;; (global-set-key (kbd "C-x C-r") 'recentf-open-files)
-(global-set-key (kbd "C-x b") 'consult-buffer)
+;; (global-set-key (kbd "C-x b") 'consult-buffer)
 
 
 (delete-selection-mode 1)
