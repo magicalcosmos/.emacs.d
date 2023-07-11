@@ -152,3 +152,7 @@
 ;;   (other-window 1))
 
 ;; (add-hook 'emacs-startup-hook #'my-default-window-setup)
+;; (use-package hungry-delete
+;;   :ensure t)
+
+;; (global-hungry-delete-mode)
