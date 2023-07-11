@@ -92,7 +92,7 @@
 ;; (require 'init-corfu)
 
 ;; (require 'init-fzf)
-;; (require 'init-vterm)
+(require 'init-vterm)
 
 ;; (require 'init-dired)
 ;; (require 'init-org-roam)
@@ -134,3 +134,21 @@
 (when (and (display-graphic-p) (= (display-screens) 3))
   (make-frame)
   (set-frame-position (selected-frame) 1440 2560))
+
+;; 额外功能包
+
+(use-package visual-regexp
+  :bind (("C-c r r" . #'vr/replace)))
+
+(use-package deadgrep
+  :bind (("C-c H" . #'deadgrep)))
+
+;; (defun my-default-window-setup ()
+;;   "Called by emacs-startup-hook to set up my initial window configuration."
+
+;;   (split-window-right)
+;;   (other-window 1)
+;;   (find-file "~/todos/todo.org")
+;;   (other-window 1))
+
+;; (add-hook 'emacs-startup-hook #'my-default-window-setup)
