@@ -36,7 +36,7 @@
 ;; (require 'init-helm-lsp)
 ;; (require 'init-helm-xref)
 ;; (require 'init-hydra)
-;; (require 'init-flycheck)
+(require 'init-flycheck)
 
 (require 'init-company)
 ;; (require 'init-avy)

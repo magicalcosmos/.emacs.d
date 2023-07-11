@@ -5,9 +5,6 @@
 (use-package flycheck
   :ensure t
   :config
-  (when sys/win32p
-    (setq flycheck-check-syntax-automatically '(save)))
-
   (flycheck-add-mode 'javascript-eslint 'web-mode)
 
   (flycheck-define-checker javascript-eslint

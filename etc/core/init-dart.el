@@ -1,6 +1,6 @@
-(require 'package)
+;; (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-(package-initialize)
+;; (package-initialize)
 
 (setq package-selected-packages 
   '(dart-mode lsp-mode lsp-dart lsp-treemacs flycheck company
