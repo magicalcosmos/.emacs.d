@@ -268,14 +268,45 @@
 (setq use-package-always-ensure t)
 
 
-(package-install 'vertico)
-(vertico-mode t)
+(use-package vertico
+  ;; Special recipe to load extensions conveniently
+  :straight (vertico :files (:defaults "extensions/*")
+                     :includes (vertico-indexed
+                                vertico-flat
+                                vertico-grid
+                                vertico-mouse
+                                vertico-quick
+                                vertico-buffer
+                                vertico-repeat
+                                vertico-reverse
+                                vertico-directory
+                                vertico-multiform
+                                vertico-unobtrusive
+                                ))
+  :general
+  (:keymaps 'vertico-map
+   "<tab>" #'vertico-insert    ; Choose selected candidate
+   "<escape>" #'minibuffer-keyboard-quit ; Close minibuffer)
+  :custom
+  (vertico-count 13)                    ; Number of candidates to display
+  (vertico-resize t)
+  (vertico-cycle nil) ; Go from last to first candidate and first to last (cycle)?
+  :config
+  (vertico-mode))
+  (vertico-buffer-mode)
 
 (package-install 'orderless)
 (setq completion-styles '(orderless))
 
-(package-install 'marginalia)
-(marginalia-mode t)
+(use-package marginalia
+  :general
+  (:keymaps 'minibuffer-local-map
+   "M-A" 'marginalia-cycle)
+  :custom
+  (marginalia-max-relative-age 0)
+  (marginalia-align 'right)
+  :init
+  (marginalia-mode))
 
 (package-install 'embark)
 (global-set-key (kbd "C-;") 'embark-act)
