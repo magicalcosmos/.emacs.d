@@ -7,6 +7,8 @@
   (lsp-enable-imenu t)
   (lsp-enable-completion-at-point t)
   (lsp-eldoc-hook nil)
+  (lsp-javascript-suggest-complete-js-docs t)
+  (lsp-typescript-suggest-complete-js-docs t)
   
   ;; what to use when checking on-save. "check" is default, I prefer clippy
   (lsp-rust-analyzer-cargo-watch-command "clippy")
@@ -85,7 +87,7 @@
 (use-package lsp-ui
   :ensure t
   :custom-face
-  (lsp-ui-doc-background ((t (:background nil))))
+  (lsp-ui-doc-background ((t (:background unspecified))))
   :init (setq lsp-enable-snippet nil
               lsp-ui-sideline-enable nil
               lsp-ui-peek-enable nil
