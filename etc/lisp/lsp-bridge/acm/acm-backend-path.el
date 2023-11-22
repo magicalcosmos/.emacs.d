@@ -1,4 +1,4 @@
-;;; acm-backend-path.el --- Path backend for acm
+;;; acm-backend-path.el --- Path backend for acm  -*- lexical-binding: t; no-byte-compile: t; -*-
 
 ;; Filename: acm-backend-path.el
 ;; Description: Path backend for acm
@@ -93,34 +93,32 @@
   :type 'boolean
   :group 'acm-backend-path)
 
-(defun acm-backend-path-candidates (keyword)
-  (when acm-enable-path
-    (let* ((candidates (list))
-          (parent-dir (ignore-errors (expand-file-name (file-name-directory (thing-at-point 'filename))))))
-      (when (and parent-dir
-                 (file-exists-p parent-dir))
-        (let ((current-file (file-name-base keyword))
-              (files (cl-remove-if (lambda (subdir) (or (member subdir '("." ".."))))
-                                   (directory-files parent-dir))))
-          (dolist (file files)
-            (when (acm-candidate-fuzzy-search current-file file)
-              (let* ((file-path (expand-file-name file parent-dir))
-                     (file-type (if (file-directory-p file-path) "dir" "file")))
-                (add-to-list 'candidates (list :key file
-                                               :icon file-type
-                                               :label file
-                                               :display-label file
-                                               :annotation (capitalize file-type)
-                                               :backend "path")
-                             t))))))
-      (acm-candidate-sort-by-prefix keyword candidates))))
+(defvar-local acm-backend-path-items nil)
 
-(defun acm-backend-path-candidate-expand (candidate-info bound-start)
+(defun acm-backend-path-candidates (keyword)
+  (acm-with-cache-candidates
+   acm-backend-path-cache-candiates
+   (when acm-enable-path
+     acm-backend-path-items)))
+
+(defun acm-backend-path-candidate-expand (candidate-info bound-start &optional preview)
   (let* ((keyword (acm-get-input-prefix))
          (file-name (plist-get candidate-info :label))
          (parent-dir (file-name-directory keyword)))
-    (delete-region bound-start (point))
-    (insert (concat parent-dir file-name))))
+
+    ;; Avoid insert duplicate `.' for file that have LSP server, such as python, golang, rust etc.
+    (when (and (string-equal (char-to-string (char-before bound-start)) ".")
+               (string-equal (substring file-name 0 1) "."))
+      (setq bound-start (1- bound-start)))
+
+    (if preview
+        (acm-preview-create-overlay bound-start (point) (concat parent-dir file-name))
+      (delete-region bound-start (point))
+      (insert (concat parent-dir file-name)))))
+
+(defun acm-backend-path-clean ()
+  (setq-local acm-backend-path-items nil)
+  (setq-local acm-backend-path-cache-candiates nil))
 
 (provide 'acm-backend-path)
 

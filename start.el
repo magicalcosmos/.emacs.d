@@ -267,6 +267,12 @@
 (package-install 'use-package))
 (setq use-package-always-ensure t)
 
+(unless (package-installed-p 'quelpa)
+  (with-temp-buffer
+    (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
+    (eval-buffer)
+    (quelpa-self-upgrade)))
+
 
 (use-package vertico
   ;; Special recipe to load extensions conveniently
@@ -543,6 +549,7 @@ Supports exporting consult-grep to wgrep, file to wdeired, and consult-location 
 ;(setq ido-everywhere t)
 ;(setq ido-use-filename-at-point 'guess)
 ;(ido-mode 1)
+
 
 
 

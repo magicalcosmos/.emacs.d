@@ -1,4 +1,4 @@
-;;; lsp-bridge-ref.el --- Show references for lsp-bridge
+;;; lsp-bridge-ref.el --- Show references for lsp-bridge  -*- lexical-binding: t -*-
 
 ;; Filename: lsp-bridge-ref.el
 ;; Description: Search and refacotry code with rg
@@ -90,13 +90,6 @@
   :type 'hook
   :group 'lsp-bridge-ref)
 
-(defcustom lsp-bridge-ref-flash-line-delay .3
-  "How many seconds to flash `lsp-bridge-ref-font-lock-flash' after navigation.
-
-Setting this to nil or 0 will turn off the indicator."
-  :type 'number
-  :group 'lsp-bridge-ref)
-
 (defcustom lsp-bridge-ref-kill-temp-buffer-p t
   "Default this option is true, it will kill temp buffer when quit lsp-bridge-ref buffer.
 
@@ -169,11 +162,6 @@ Default is enable, set this variable to nil if you don't like this feature."
 (defface lsp-bridge-ref-font-lock-mark-deleted
   '((t (:foreground "#ff3b30" :bold t)))
   "Face for keyword match."
-  :group 'lsp-bridge-ref)
-
-(defface lsp-bridge-ref-font-lock-flash
-  '((t (:inherit highlight)))
-  "Face to flash the current line."
   :group 'lsp-bridge-ref)
 
 (defface lsp-bridge-ref-font-lock-function-location
@@ -390,25 +378,23 @@ user more freedom to use rg with special arguments."
   (with-current-buffer lsp-bridge-ref-buffer
     (insert references-content)
 
-    ;; "^\033\\[95m\\(.*?\\)\033\\[0m$"
-
     ;; Highlight file path.
     (goto-char (point-min))
-    (while (re-search-forward "^\033\\[95m\\(.*?\\)\033\\[0m$" nil t)
+    (while (re-search-forward "^\033\\[95m\\([^\033]+\\)\033\\[0m$" nil t)
       (replace-match (concat (propertize (match-string 1)
                                          'face nil 'font-lock-face 'lsp-bridge-ref-font-lock-file))
                      t t))
 
     ;; Highlight references.
     (goto-char (point-min))
-    (while (re-search-forward "\033\\[94m\\(.*?\\)\033\\[0m" nil t)
+    (while (re-search-forward "\033\\[94m\\([^\033]*\\)\033\\[0m" nil t)
       (replace-match (concat (propertize (match-string 1)
                                          'face nil 'font-lock-face 'lsp-bridge-ref-font-lock-match))
                      t t))
 
     ;; Highlight diagnostics.
     (goto-char (point-min))
-    (while (re-search-forward "\\[93m\\(.*?\n?.*?\\)\\[0m" nil t)
+    (while (re-search-forward "\033\\[93m\\([^\033]+\\)\033\\[0m" nil t)
       (replace-match (concat (propertize (match-string 1)
                                          'face nil 'font-lock-face 'lsp-bridge-ref-font-lock-diagnostic))
                      t t))
@@ -445,11 +431,10 @@ user more freedom to use rg with special arguments."
   (string-to-number (thing-at-point 'symbol)))
 
 (defun lsp-bridge-ref-get-match-buffer (filepath)
-  (catch 'find-match
-    (dolist (buffer (buffer-list))
-      (when (string-equal (buffer-file-name buffer) filepath)
-        (throw 'find-match buffer)))
-    nil))
+  (cl-dolist (buffer (buffer-list))
+    (when (string-equal (buffer-file-name buffer) filepath)
+      (cl-return buffer)
+      )))
 
 (defun lsp-bridge-ref-current-line-empty-p ()
   (save-excursion
@@ -602,7 +587,7 @@ user more freedom to use rg with special arguments."
         (setq start (point))
         (setq filename (buffer-substring-no-properties start end))
         (end-of-line)
-        (add-to-list 'file-extensions (lsp-bridge-ref-file-extension filename))))
+        (cl-pushnew (lsp-bridge-ref-file-extension filename) file-extensions :test 'string-equal)))
     (if (< (length file-extensions) 2)
         (message (format "[LSP-Bridge] Has one type files now."))
       (setq filter-extension (ido-completing-read (if match-files
@@ -768,7 +753,9 @@ user more freedom to use rg with special arguments."
 (defun lsp-bridge-ref-jump-prev-file ()
   (interactive)
   (let ((prev-match-pos
-         (if (save-excursion (search-backward-regexp lsp-bridge-ref-regexp-file nil t))
+         (if (save-excursion
+               (and (search-backward-regexp lsp-bridge-ref-regexp-file nil t)
+                    (search-backward-regexp lsp-bridge-ref-regexp-split-line nil t)))
              (let* ((first-search-line
                      (save-excursion
                        (search-backward-regexp lsp-bridge-ref-regexp-file nil t)
@@ -861,20 +848,17 @@ user more freedom to use rg with special arguments."
   (lsp-bridge-ref-open-file t))
 
 (defun lsp-bridge-ref-flash-line ()
-  (let ((pulse-iterations 1)
-        (pulse-delay lsp-bridge-ref-flash-line-delay))
-    ;; Flash match line.
-    (pulse-momentary-highlight-one-line (point) 'lsp-bridge-ref-font-lock-flash)
-    ;; View the function name when navigate in match line.
-    (when lsp-bridge-ref-show-function-name-p
-      (require 'which-func)
-      (let ((function-name (which-function)))
-        (when function-name
-          (message "[LSP-Bridge] Located in function: %s"
-                   (propertize
-                    function-name
-                    'face 'lsp-bridge-ref-font-lock-function-location
-                    )))))))
+  ;; Flash match line.
+  (lsp-bridge-flash-line)
+  ;; View the function name when navigate in match line.
+  (when lsp-bridge-ref-show-function-name-p
+    (require 'which-func)
+    (when-let ((function-name (which-function)))
+      (message "[LSP-Bridge] Located in function: %s"
+               (propertize
+                function-name
+                'face 'lsp-bridge-ref-font-lock-function-location
+                )))))
 
 (defun lsp-bridge-ref-in-org-link-content-p ()
   (and (looking-back "\\[\\[.*" (line-beginning-position))

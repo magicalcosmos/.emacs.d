@@ -12,15 +12,18 @@ class FindReferences(Handler):
     method = "textDocument/references"
 
     def process_request(self, position) -> dict:
+        self.pos = position
         return dict(
             position=position,
             context=dict(includeDeclaration=False)
         )
 
-    def process_response(self, response: dict) -> None:
+    def process_response(self, response) -> None:
         if response is None:
-            message_emacs("No references found")
+            eval_in_emacs("lsp-bridge-find-ref-fallback", self.pos)
         else:
+            response = remove_duplicate_references(response)
+
             references_dict = {}
             for uri_info in response:
                 path = uri_to_path(uri_info["uri"])
@@ -31,24 +34,24 @@ class FindReferences(Handler):
 
             references_counter = 0
             references_content = ""
+            tramp_method = get_remote_tramp_method()
             for i, (path, ranges) in enumerate(references_dict.items()):
-                references_content += "\n" + REFERENCE_PATH + path + REFERENCE_ENDC + "\n"
+                references_content += "".join(["\n", REFERENCE_PATH, tramp_method, path, REFERENCE_ENDC, "\n"])
 
                 for rg in ranges:
-                    with open(path, encoding="utf-8", errors="ignore") as f:
-                        line = rg["start"]["line"]
-                        start_column = rg["start"]["character"]
-                        end_column = rg["end"]["character"]
-                        line_content = linecache.getline(path, rg["start"]["line"] + 1)
+                    line = rg["start"]["line"]
+                    start_column = rg["start"]["character"]
+                    end_column = rg["end"]["character"]
+                    line_content = linecache.getline(path, rg["start"]["line"] + 1)
 
-                        references_content += "{}:{}:{}".format(
-                            line + 1,
-                            start_column,
-                            line_content[:start_column] + REFERENCE_TEXT +
-                            line_content[start_column:end_column] + REFERENCE_ENDC +
-                            line_content[end_column:])
-                        references_counter += 1
+                    references_content += "{}:{}:{}".format(
+                        line + 1,
+                        start_column,
+                        "".join([line_content[:start_column], REFERENCE_TEXT, line_content[start_column:end_column], REFERENCE_ENDC, line_content[end_column:]])
+                        )
+                    references_counter += 1
 
             linecache.clearcache()  # clear line cache
 
-            eval_in_emacs("lsp-bridge-references--popup", references_content, references_counter)
+            eval_in_emacs("lsp-bridge-references--popup", references_content, references_counter, self.pos)
+

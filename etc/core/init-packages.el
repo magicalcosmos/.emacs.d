@@ -13,14 +13,14 @@
 
 (require 'package)
 
-;; (setq package-archives
-;;       '(("melpa"  . "https://melpa.org/packages/")
-;;         ("gnu"    . "https://elpa.gnu.org/packages/")
-;;         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+(setq package-archives
+      '(("melpa"  . "https://melpa.org/packages/")
+        ("gnu"    . "https://elpa.gnu.org/packages/")
+        ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
-(setq package-archives '(("gnu"   . "http://1.15.88.122/gnu/")
-                        ("melpa" . "http://1.15.88.122/melpa/")
-                        ("nongnu" . "http://1.15.88.122/nongnu/")))
+;; (setq package-archives '(("gnu"   . "http://1.15.88.122/gnu/")
+;;                         ("melpa" . "http://1.15.88.122/melpa/")
+;;                         ("nongnu" . "http://1.15.88.122/nongnu/")))
 
 (package-initialize)
 

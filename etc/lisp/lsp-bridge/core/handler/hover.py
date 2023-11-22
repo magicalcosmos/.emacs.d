@@ -1,6 +1,5 @@
 from core.handler import Handler
 from core.utils import *
-import linecache
 
 
 def make_code_block(language, string):
@@ -11,7 +10,8 @@ class Hover(Handler):
     name = "hover"
     method = "textDocument/hover"
 
-    def process_request(self, position) -> dict:
+    def process_request(self, position, show_style) -> dict:
+        self.show_style = show_style
         return dict(position=position)
 
     def parse_hover_contents(self, contents, render_strings):
@@ -23,11 +23,13 @@ class Hover(Handler):
                 render_strings.append(make_code_block("text", contents))
         elif content_type == dict:
             if "kind" in contents:
-                if contents["kind"] == "markdown":
+                # Some language servers will return plaintext as the kind with the markdown format as value, such as erlang_ls
+                if contents["kind"] == "markdown" or contents["kind"] == "plaintext":
                     render_strings.append(contents["value"])
                 else:
+                    lsp_server = self.file_action.get_match_lsp_servers("hover")[0]
                     render_strings.append(make_code_block(
-                        self.file_action.get_match_lsp_servers("hover")[0].server_info["languageId"],
+                        lsp_server.get_language_id(self.file_action),
                         contents["value"]
                     ))
             elif "language" in contents:
@@ -46,4 +48,8 @@ class Hover(Handler):
         contents = response["contents"]
         render_string = self.parse_hover_contents(contents, [])
 
-        eval_in_emacs("lsp-bridge-popup-documentation--show", render_string)
+        if self.show_style == "popup":
+            callback = "lsp-bridge-popup-documentation--callback"
+        else:
+            callback = "lsp-bridge-show-documentation--callback"
+        eval_in_emacs(callback, render_string)

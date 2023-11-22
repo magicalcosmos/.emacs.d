@@ -26,9 +26,10 @@
 (require 'init-yasnippet)
 
 ;; config as below is from https://github.com/emacs-lsp/lsp-mode/blob/master/docs/tutorials/reactjs-tutorial.md
-(require 'init-lsp-mode)
+;; (require 'init-lsp-mode)
 
-;; (require 'init-lsp-bridge)
+(require 'init-lsp-bridge)
+
 (require 'init-lsp-treemacs)
 
 (require 'init-syntaxcheck)
@@ -43,7 +44,7 @@
 (require 'init-which-key)
 ;; (require 'init-dap-mode)
 ;; (require 'init-json-mode)
-;; (require 'init-auto-package-update)
+(require 'init-auto-package-update)
 ;; ;; new config
 ;; (require 'color-rg)
 (require 'init-js-doc)
@@ -117,6 +118,10 @@
 (require 'init-dart)
 
 (require 'init-go)
+
+(require 'init-kind-icon)
+
+;; (require 'init-popper)
 
 ;; (require 'init-python)
 ;; (require 'copilot)

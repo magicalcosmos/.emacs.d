@@ -22,8 +22,10 @@
 import threading
 import os
 import traceback
+import re
+import functools
 
-from core.utils import get_emacs_vars, message_emacs, eval_in_emacs, logger
+from core.utils import get_emacs_vars, message_emacs, eval_in_emacs, logger, parse_json_content, cmp
 from core.pystardict import Dictionary
 
 
@@ -36,6 +38,7 @@ class SearchSdcvWords:
         self.search_ticker = 0
         self.search_thread_queue = []
         self.words = {}
+        self.pinyin= {}
         
         self.build_words_thread = threading.Thread(target=self.build_words)
         self.build_words_thread.start()
@@ -51,15 +54,20 @@ class SearchSdcvWords:
     def build_words(self):
         try:
             if len(self.words) == 0:
+                pinyin_dictionary_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "resources", "pinyin")
+                if os.path.exists("{}.ifo".format(pinyin_dictionary_path)):
+                    pinyin_dictionary = Dictionary(pinyin_dictionary_path, in_memory=True)
+                    for key, value in pinyin_dictionary.items():
+                        self.pinyin[key] = parse_json_content(value)
+
                 if self.search_dictionary == "kdic-ec-11w":
                     dictionary_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "resources", self.search_dictionary)
                 else:
                     dictionary_path = self.search_dictionary
                     
                 if os.path.exists("{}.ifo".format(dictionary_path)):
-                    start_dictionary = Dictionary(dictionary_path)
+                    start_dictionary = Dictionary(dictionary_path, in_memory=True)
                     
-                    candidates = []
                     for word in start_dictionary.keys():
                         first_line_translation = start_dictionary.dict[word].split()[0]
                         no_phonetic_translation = first_line_translation.split(">")[-1]
@@ -85,15 +93,44 @@ class SearchSdcvWords:
         else:
             return candidate
                     
+    def sort_words(self, prefix, word_a, word_b):
+        word_a_starts_with_prefix = word_a["key"].startswith(prefix)
+        word_b_starts_with_prefix = word_b["key"].startswith(prefix)
+
+        if word_a_starts_with_prefix and word_b_starts_with_prefix:
+            return cmp(word_a["key"], word_b["key"])
+        elif word_a_starts_with_prefix:
+            return -1
+        elif word_b_starts_with_prefix:
+            return 1
+        else:
+            return cmp(word_a["key"], word_b["key"])
+
     def search_words(self, prefix: str, ticker: int):
         candidates = []
-        for word, translation in self.words.items():
-            if word.startswith(prefix.lower()):
+        
+        prefix_regexp = re.compile(".*".join(prefix))
+        if len(prefix.lower()) > 3 and prefix.lower() in self.pinyin:
+            for word, translation in self.pinyin[prefix.lower()].items():
                 candidate = {
                     "key": word,
                     "icon": "translation",
                     "label": word,
-                    "display-label": self.adjust_word_case(prefix, word),
+                    "displayLabel": self.adjust_word_case(prefix, word),
+                    "annotation": translation,
+                    "backend": "search-sdcv-words"
+                }
+                candidates.append(candidate)
+                if len(candidates) > self.search_max_number:
+                    break
+
+        for word, translation in self.words.items():
+            if prefix.lower() == word or word.startswith(prefix.lower()) or prefix_regexp.match(word):
+                candidate = {
+                    "key": word,
+                    "icon": "translation",
+                    "label": word,
+                    "displayLabel": self.adjust_word_case(prefix, word),
                     "annotation": translation,
                     "backend": "search-sdcv-words"
                 }
@@ -103,4 +140,5 @@ class SearchSdcvWords:
                     break
                 
         if ticker == self.search_ticker:
-            eval_in_emacs("lsp-bridge-search-sdcv-words--record-items", candidates)
+            eval_in_emacs("lsp-bridge-search-backend--record-items", "search-sdcv-words",
+                          sorted(candidates, key=functools.cmp_to_key(lambda a, b: self.sort_words(prefix, a, b))))

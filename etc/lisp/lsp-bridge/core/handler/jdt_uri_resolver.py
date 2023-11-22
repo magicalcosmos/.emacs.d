@@ -1,6 +1,5 @@
 import hashlib
 import os
-import re
 import tempfile
 from urllib.parse import urlparse, unquote
 
@@ -29,7 +28,7 @@ class JDTUriResolver(Handler):
             message_emacs("No definition found.")
             return
 
-        if type(response) == str:
+        if isinstance(response, str):
             # Save the analysis content to the file.
 
             external_file_dir = ''
@@ -39,7 +38,7 @@ class JDTUriResolver(Handler):
                 # Value for -data: An absolute path to your data directory. eclipse.jdt.ls stores workspace specific information in it. This should be unique per workspace/project.
                 index = self.file_action.single_server_info['command'].index('-data')
                 data_dir = pathlib.Path(self.file_action.single_server_info['command'][index + 1])
-            except ValueError as e:
+            except:
                 md5 = hashlib.md5()
                 md5.update(self.file_action.get_lsp_server_project_path())
                 project_hash = md5.hexdigest()
@@ -59,5 +58,4 @@ class JDTUriResolver(Handler):
 
             external_file = external_file.as_posix()
             self.file_action.create_external_file_action(external_file, self.external_file_link)
-            eval_in_emacs("lsp-bridge-define--jump", external_file, self.start_pos)
-
+            eval_in_emacs("lsp-bridge-define--jump", external_file, get_lsp_file_host(), self.start_pos)

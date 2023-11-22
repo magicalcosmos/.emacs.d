@@ -1,8 +1,7 @@
-(require 'posframe)
+(require 'yasnippet)
+(yas-global-mode 1)
 
 (require 'lsp-bridge)
-(setq +format-with-lsp nil)
-(setq lsp-bridge-enable-log nil)
 (global-lsp-bridge-mode)
 
 (with-eval-after-load 'xref

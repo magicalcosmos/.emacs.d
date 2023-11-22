@@ -21,20 +21,22 @@
 
 import json
 import os
-import queue
 import subprocess
 import threading
 import traceback
 
-from core.utils import MessageReceiver, MessageSender, eval_in_emacs, logger, get_os_name, parse_json_content
-from platform import version
+from core.utils import *
 from subprocess import PIPE
-from sys import stderr
-from threading import Thread
-from distutils.version import StrictVersion
+from sys import stderr,version_info
+
+if version_info[1] < 12 :
+    from distutils.version import StrictVersion
+    version_function = StrictVersion
+else: 
+    from pkg_resources import parse_version
+    version_function = parse_version
 
 TABNINE_PROTOCOL_VERSION = "1.0.14"
-TABNINE_BINARIES_FOLDER = os.path.expanduser("~/.TabNine/")
 TABNINE_EXECUTABLE = "TabNine.exe" if get_os_name() == "windows" else "TabNine"
 
 DEFAULT_BUFFER_SIZE = 100000000  # we need make buffer size big enough, avoid pipe hang by big data response from LSP server
@@ -49,9 +51,11 @@ class TabNine:
         self.dispatcher = None
         
         self.try_completion_timer = None
-
+        
+        [self.tabnine_binaries_folder] = get_emacs_vars(["tabnine-bridge-binaries-folder"])
+        
     def complete(self, before, after, filename, region_includes_beginning, region_includes_end, max_num_results):
-        if self.is_tabnine_exist():
+        if self.is_tabnine_exist() and isinstance(filename, str):
             if self.try_completion_timer is not None and self.try_completion_timer.is_alive():
                 self.try_completion_timer.cancel()
             
@@ -68,7 +72,7 @@ class TabNine:
                     }
                 }
             }
-            
+
             self.try_completion_timer = threading.Timer(0.5, self.do_complete)
             self.try_completion_timer.start()
             
@@ -76,13 +80,13 @@ class TabNine:
         self.sender.send_request(self.message)    # type: ignore
     
     def get_tabnine_path(self):
-        if os.path.exists(TABNINE_BINARIES_FOLDER):
+        if os.path.exists(self.tabnine_binaries_folder):
             try:
-                versions = os.listdir(TABNINE_BINARIES_FOLDER)
-                versions = list(filter(lambda f: os.path.isdir(os.path.join(TABNINE_BINARIES_FOLDER, f)), versions))
-                versions.sort(key=StrictVersion, reverse=True)
+                versions = os.listdir(self.tabnine_binaries_folder)
+                versions = list(filter(lambda f: os.path.isdir(os.path.join(self.tabnine_binaries_folder, f)), versions))
+                versions.sort(key=version_function, reverse=True)
                 for version in versions:
-                    version_path = os.path.join(TABNINE_BINARIES_FOLDER, version)
+                    version_path = os.path.join(self.tabnine_binaries_folder, version)
                     if os.path.isdir(version_path):
                         distro_dir = os.listdir(version_path)[0]
                         executable_path = os.path.join(version_path, distro_dir, TABNINE_EXECUTABLE)
@@ -94,11 +98,11 @@ class TabNine:
         return None
     
     def is_tabnine_exist(self):
-        if self.path == None:
+        if self.path is None:
             self.path = self.get_tabnine_path()
             
         if isinstance(self.path, str) and os.path.exists(self.path):
-            if self.process == None:
+            if self.process is None:
                 self.process = subprocess.Popen(
                     [self.path, "--client", "emacs"], 
                     bufsize=DEFAULT_BUFFER_SIZE, 
@@ -115,9 +119,9 @@ class TabNine:
                 self.dispatcher = threading.Thread(target=self.message_dispatcher)
                 self.dispatcher.start()
                 
-                logger.info("\nStart TabNine server{}".format(self.path))
+                log_time("Start TabNine server ({})".format(self.path))
                 
-            return self.process != None
+            return self.process is not None
         else:
             return False
         
@@ -136,7 +140,7 @@ class TabNine:
                             "key": label,
                             "icon": "tabnine",
                             "label": label,
-                            "display-label": label,
+                            "displayLabel": label,
                             "annotation": result["detail"] if "detail" in result else "",
                             "backend": "tabnine",
                             "new_suffix": result["new_suffix"],
@@ -147,7 +151,7 @@ class TabNine:
                         
                     completion_candidates = sorted(completion_candidates, key=lambda candidate: candidate["annotation"], reverse=True)
                 
-                eval_in_emacs("lsp-bridge-tabnine--record-items", completion_candidates)
+                eval_in_emacs("lsp-bridge-search-backend--record-items", "tabnine", completion_candidates)
         except:
             logger.error(traceback.format_exc())
     
@@ -159,7 +163,7 @@ class TabNineSender(MessageSender):
         self.process.stdin.write(data.encode("utf-8"))    # type: ignore
         self.process.stdin.flush()    # type: ignore
         
-        logger.info("\n--- Send TabNine Complete Request: {}".format(message["request"]["Autocomplete"]["filename"]))
+        log_time("Send TabNine complete request for project {}".format(message["request"]["Autocomplete"]["filename"]))
         
         logger.debug(json.dumps(message, indent=3))
         
