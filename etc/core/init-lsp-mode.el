@@ -1,5 +1,4 @@
 (use-package lsp-mode
-  :after company
   :ensure t
   :custom
   (lsp-enable-snippet t)
@@ -142,4 +141,8 @@
   ;; or
   (add-to-list 'lsp-file-watch-ignored-files "[/\\\\]\\.*\\'"))
   
+  (general-nmap
+    :states 'normal
+    "gd" '(lsp-find-definition :wk "jump to the definition")
+    "gr" '(lsp-find-references :wk "find all references"))
 (provide 'init-lsp-mode)

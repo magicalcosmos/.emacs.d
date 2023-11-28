@@ -13,6 +13,7 @@
 ;; Author: brodyliao
 
 (use-package company
+  :after lsp-mode
   :init
   (global-company-mode t)
   :bind (:map company-active-map
@@ -24,7 +25,7 @@
     (setq company-minimum-prefix-length 1)
     ;; Trigger completion immediately.
     (setq company-idle-delay 0)
-  :hook (emacs-lisp-mode . company-mode))
+  :hook (lsp-mode . company-mode))
 
 (use-package company-prescient
   :after company
