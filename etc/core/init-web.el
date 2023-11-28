@@ -16,9 +16,9 @@
 :commands web-mode
 :mode (
   ("\\.html?\\'" . web-mode)
-  ("\\.ts\\'" . web-mode)
-  ("\\.tsx\\'" . web-mode)
-  ("\\.jsx\\'" . web-mode)
+  ;; ("\\.ts\\'" . web-mode)  ;;  会自动格式化，有问题
+  ;; ("\\.tsx\\'" . web-mode)
+  ;; ("\\.jsx\\'" . web-mode)
   ("\\.vue?\\'" . web-mode)
   ("\\.scss\\'" . web-mode)
   ("\\.css\\'" . web-mode)
@@ -38,6 +38,7 @@
   (setq web-mode-enable-heredoc-fontification t)
   (setq web-mode-enable-current-element-highlight t)
   (setq web-mode-enable-current-column-highlight t)
+  (setq web-mode-enable-auto-indentation nil)
 
 ;; typescript
    (setq web-mode-attr-indent-offset nil)
