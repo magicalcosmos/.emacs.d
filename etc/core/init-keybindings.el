@@ -42,7 +42,7 @@
 ;; 这一行代码，将函数 open-init-file 绑定到 <f2> 键上
 (global-set-key (kbd "<f2>") 'open-init-file)
 
-(global-set-key (kbd "C-x b") 'consult-buffer)
+;; (global-set-key (kbd "C-x b") 'consult-buffer)
 
 ;;swiper
 (global-set-key (kbd "C-s") 'consult-line)
@@ -69,4 +69,22 @@
 (global-set-key (kbd "M-/") 'evilnc-comment-or-uncomment-lines)
 
 
+(with-eval-after-load 'evil 
+  ;; 这个配置主要覆盖evil下的相应快捷键
+  (define-key evil-insert-state-map (kbd "C-n") 'acm-select-next)
+  (define-key evil-insert-state-map (kbd "C-p") 'acm-select-prev))
+
+;; Emacs key bindings
+(global-set-key (kbd "M-/") 'evilnc-comment-or-uncomment-lines)
+
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+;; 保持鼠标所在行数不变屏幕向下滚动一行
+(global-set-key (kbd "M-n") 'scroll-up-line)
+
+;; 保持鼠标所在行数不变屏幕向上滚动一行
+(global-set-key (kbd "M-p") 'scroll-down-line)
+
+
 (provide 'init-keybindings)
+

@@ -26,11 +26,12 @@
   (evil-mode 1)
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
   (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+  (define-key evil-normal-state-map (kbd "C-j") 'evil-paste-pop-next)
+  (define-key evil-normal-state-map (kbd "C-k") 'evil-paste-pop)
 
   ;; Use visual line motions even outside of visual-line-mode buffers
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-
   (unless bl/is-termux
     ;; Disable arrow keys in normal and visual modes
     (define-key evil-normal-state-map (kbd "<left>") 'bl/dont-arrow-me-bro)

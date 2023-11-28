@@ -4,13 +4,17 @@
 (require 'lsp-bridge)
 (global-lsp-bridge-mode)
 
-;; (with-eval-after-load 'xref
-;;   (setq xref-search-program 'ripgrep)     ;project-find-regexp
-;;   (when (functionp 'xref-show-definitions-completing-read)
-;;     (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
-;;     (setq xref-show-xrefs-function #'xref-show-definitions-completing-read)))
+(with-eval-after-load 'xref
+  (setq xref-search-program 'ripgrep)     ;project-find-regexp
+  (when (functionp 'xref-show-definitions-completing-read)
+    (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
+    (setq xref-show-xrefs-function #'xref-show-definitions-completing-read)))
 
-
+(with-eval-after-load 'lsp-bridge
+      (setq acm-enable-quick-access t
+            acm-quick-access-use-number-select t)
+  )
+ 
   (general-nmap
     :states 'normal
     "gd" '(lsp-bridge-find-def :wk "jump to the definition")

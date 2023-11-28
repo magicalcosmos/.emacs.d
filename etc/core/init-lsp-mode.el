@@ -1,4 +1,5 @@
 (use-package lsp-mode
+  :after company
   :ensure t
   :custom
   (lsp-enable-snippet t)

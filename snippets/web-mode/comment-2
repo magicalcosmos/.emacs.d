@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
-# name: code comments 2
-# key: /**
+# name: code comments with parameters
+# key: //*
 # --
 
 /**

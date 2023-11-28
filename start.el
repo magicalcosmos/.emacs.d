@@ -13,6 +13,8 @@
 
 ;;在文件最开头添加地个 文件作用域的变量设置，设置变量的绑定方式
 ;; -*- lexical-binding: t -*-
+	
+(push "~/.emacs" load-path)
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -242,14 +244,44 @@
 ;; Set font size 180 = 18pt
 (set-face-attribute 'default nil :height 160)
 
+
+;;显示语法高亮
+(global-font-lock-mode t)
+
+;;设置编码
+(set-buffer-file-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-16-le)
+(set-default-coding-systems 'utf-8)
+(set-clipboard-coding-system 'utf-8)
+(set-language-environment "UTF-8")
+(prefer-coding-system 'utf-8)  
+(set-file-name-coding-system 'gb18030)
+
+;;内部有个自动补全功能，根据当前buffer的内容、文件名、剪切板等自动补全
+(setq hippie-expand-try-functions-list
+      '(
+        try-expand-dabbrev
+        try-expand-dabbrev-visible
+        try-expand-dabbrev-all-buffers
+        try-expand-dabbrev-from-kill
+        try-complete-file-name-partially
+        try-complete-file-name
+        try-expand-all-abbrevs
+        try-expand-list
+        try-expand-line
+        try-complete-lisp-symbol-partially
+        try-complete-lisp-symbol))
+
 (require 'package)
 ;;optimise loading package
-  ;; (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-  ;;                          ("melpa-stable" . "https://stable.melpa.org/packages/")
-  ;;                          ("org" . "https://orgmode.org/elpa/")
-  ;;                          ("elpa" . "https://elpa.gnu.org/packages/")))
-(setq package-archives '(("gnu"   . "http://1.15.88.122/gnu/")
-                        ("melpa" . "http://1.15.88.122/melpa/")))
+  (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                           ("melpa-stable" . "https://stable.melpa.org/packages/")
+                           ("org" . "https://orgmode.org/elpa/")
+                           ("elpa" . "https://elpa.gnu.org/packages/")))
+;; (setq package-archives '(("gnu"   . "http://1.15.88.122/gnu/")
+;;                         ("melpa" . "http://1.15.88.122/melpa/")))
 ;; set third party of source
 ;; (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
 ;;                          ("melpa" . "http://elpa.emacs-china.org/melpa/")))
@@ -272,8 +304,7 @@
     (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
     (eval-buffer)
     (quelpa-self-upgrade)))
-
-
+  
 (use-package vertico
   ;; Special recipe to load extensions conveniently
   :straight (vertico :files (:defaults "extensions/*")
@@ -430,13 +461,6 @@ Supports exporting consult-grep to wgrep, file to wdeired, and consult-location 
 
 
 
-;; 保持鼠标所在行数不变屏幕向下滚动一行
-(global-set-key (kbd "M-n") 'scroll-up-line)
-
-;; 保持鼠标所在行数不变屏幕向上滚动一行
-(global-set-key (kbd "M-p") 'scroll-down-line)
-
-
 ;; ;; 滚动半屏设置
 ;; (defun window-half-height ()
 ;;   (max 1 (/ (- (1- (window-height (selected-window))) 4) 2)))
@@ -515,8 +539,6 @@ Supports exporting consult-grep to wgrep, file to wdeired, and consult-location 
 ;; 对应Windows上面的Ctrol-x 剪切
 (global-set-key (kbd "s-x") 'kill-region) 
 
-;; Tab Widths
-(setq-default tab-width 2)
 (setq-default evil-shift-width tab-width)
 (setq tab-always-indent 'complete)
 ;; Use spaces instead of tabs for indentation

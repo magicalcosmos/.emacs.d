@@ -13,22 +13,28 @@
 ;; Author: brodyliao
 
 (use-package company
+  :init
+  (global-company-mode t)
   :bind (:map company-active-map
 	      ("C-n" . 'company-select-next)
 	      ("C-p" . 'company-select-previous))
-  :init
-  (global-company-mode t)
   :config
-  ;; Number the candidates (use M-1, M-2 etc to select completions).
-  (setq company-show-numbers t)
-  (setq company-minimum-prefix-length 1)
-  ;; Trigger completion immediately.
-  (setq company-idle-delay 0))
+    ;; Number the candidates (use M-1, M-2 etc to select completions).
+    (setq company-show-numbers t)
+    (setq company-minimum-prefix-length 1)
+    ;; Trigger completion immediately.
+    (setq company-idle-delay 0)
+  :hook (emacs-lisp-mode . company-mode))
 
-(use-package company-tabnine :ensure t)
-(add-to-list 'company-backends #'company-tabnine)
+(use-package company-prescient
+  :after company
+  :config
+  (company-prescient-mode))
 
-(setq tab-always-indent 'complete)
+;; (use-package company-tabnine :ensure t)
+;; (add-to-list 'company-backends #'company-tabnine)
+
+;; (setq tab-always-indent 'complete)
 
 
 (provide 'init-company)
