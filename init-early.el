@@ -122,7 +122,7 @@
 
 (require 'init-kind-icon)
 
-(require 'init-pdf-tools)
+;; (require 'init-pdf-tools)
 
 ;; (require 'init-eaf)
 
