@@ -45,7 +45,7 @@
 (require 'init-which-key)
 ;; (require 'init-dap-mode)
 ;; (require 'init-json-mode)
-(require 'init-auto-package-update)
+;; (require 'init-auto-package-update)
 ;; ;; new config
 ;; (require 'color-rg)
 (require 'init-js-doc)
@@ -121,6 +121,11 @@
 (require 'init-go)
 
 (require 'init-kind-icon)
+
+(require 'init-pdf-tools)
+
+;; (require 'init-eaf)
+
 
 ;; (require 'init-popper)
 

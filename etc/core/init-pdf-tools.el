@@ -12,5 +12,17 @@
 
 ;; Author: brodyliao
 
+(use-package pdf-tools
+:defer t
+:commands (pdf-view-mode pdf-tools-install)
+:mode("\\.[pP][dD][fF]\\'" . pdf-view-mode)
+:magic("%PDF" . pdf-view-mode)
+:config
+  (pdf-tools-install)  ; Standard activation command
+  (pdf-loader-install) ; On demand loading, leads to faster startup time
+  (define-pdf-cache-function pagelabels)
+  :hook ((pdf-view-mode-hook . (lambda()(display-line-numbers-mode -1)))
+        (pdf-view-mode-hook . pdf-tools-enable-minor-nodes)))
+
 
 (provide 'init-pdf-tools)
