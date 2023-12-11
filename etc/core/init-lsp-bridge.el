@@ -3,6 +3,21 @@
 
 (require 'lsp-bridge)
 (global-lsp-bridge-mode)
+
+
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
 (use-package lsp-bridge
   :straight (:host github
              :repo "manateelazycat/lsp-bridge"
@@ -11,8 +26,13 @@
   :custom
   (lsp-bridge-signature-function 'eldoc-message)
   (acm-markdown-render-font-height 80)
+              (acm-doc-frame-max-lines 40)
+            (acm-backend-codeium-candidate-min-length 3)
+            (acm-backend-lsp-match-mode 'fuzzy)
   (lsp-bridge-multi-lang-server-extension-list
     '((("ts" "tsx") . "typescript_eslint"))))
+
+    
 
 (with-eval-after-load 'xref
   (setq xref-search-program 'ripgrep)     ;project-find-regexp

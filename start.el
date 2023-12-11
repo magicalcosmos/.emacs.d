@@ -29,6 +29,8 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
+(add-to-list 'load-path "~/.emacs.d/straight")
+
 ;; Use straight.el for use-package expressions
 (straight-use-package 'use-package)
 
@@ -505,7 +507,6 @@ Supports exporting consult-grep to wgrep, file to wdeired, and consult-location 
 ;; (add-to-list 'load-path "~/.emacs.d/etc/lisp/lsp-bridge")
 ;; (add-to-list 'load-path "~/.emacs.d/etc/lisp/cape")
 ;; (add-to-list 'load-path "~/.emacs.d/etc/lisp/emacs-forfu-terminal")
-;; (add-to-list 'load-path "~/.emacs.d/etc/core")
 (add-to-list 'load-path "~/.emacs.d/theme")
 
 
