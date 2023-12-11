@@ -27,12 +27,12 @@
 
 ;; config as below is from https://github.com/emacs-lsp/lsp-mode/blob/master/docs/tutorials/reactjs-tutorial.md
 
-(require 'init-lsp-mode)
-(require 'init-company)
+;; (require 'init-lsp-mode)
+;; (require 'init-company)
 
-;; (require 'init-lsp-bridge)
+(require 'init-lsp-bridge)
 
-;; (require 'init-lsp-treemacs)
+(require 'init-lsp-treemacs)
 
 (require 'init-syntaxcheck)
 
