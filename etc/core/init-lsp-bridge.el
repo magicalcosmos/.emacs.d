@@ -18,7 +18,7 @@
   (general-nmap
     :states 'normal
     "gd" '(lsp-bridge-find-def :wk "jump to the definition")
-    "gr" '(lsp-bridge-find-def :wk "find all references")
+    "gr" '(lsp-bridge-find-references :wk "find all references")
     "go" '(lsp-bridge-find-def-other-window :wk "jump to the definition in other-window")
     "gt" '(lsp-bridge-popup-documentation :wk " lookup documentation of symbol under the cursor")
     )

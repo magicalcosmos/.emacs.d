@@ -32,7 +32,7 @@
 
 ;; (require 'init-lsp-bridge)
 
-(require 'init-lsp-treemacs)
+;; (require 'init-lsp-treemacs)
 
 (require 'init-syntaxcheck)
 

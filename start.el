@@ -50,14 +50,16 @@
                       (delete-dups (append file-name-handler-alist
                                            old-file-name-handler-alist)))))))
 
-(setq gc-cons-threshold most-positive-fixnum
-      gc-cons-percentage 0.5)
+;; (setq gc-cons-threshold most-positive-fixnum
+;;       gc-cons-percentage 0.5)
 
-(let ((normal-gc-cons-threshold (* 20 1024 1024))
-      (init-gc-cons-threshold (* 128 1024 1024)))
-  (setq gc-cons-threshold init-gc-cons-threshold)
-  (add-hook 'emacs-startup-hook
-            (lambda () (setq gc-cons-threshold normal-gc-cons-threshold))))
+;; (let ((normal-gc-cons-threshold (* 20 1024 1024))
+;;       (init-gc-cons-threshold (* 128 1024 1024)))
+;;   (setq gc-cons-threshold init-gc-cons-threshold)
+;;   (add-hook 'emacs-startup-hook
+;;             (lambda () (setq gc-cons-threshold normal-gc-cons-threshold))))
+
+(setq gc-cons-threshold 100000000)
 
 
 ;; Use spotlight search backend as a default for M-x locate (and helm/ivy

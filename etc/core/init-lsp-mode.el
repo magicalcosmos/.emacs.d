@@ -145,4 +145,5 @@
     :states 'normal
     "gd" '(lsp-ui-peek-find-definitions :wk "jump to the definition")
     "gr" '(lsp-ui-peek-find-references :wk "find all references"))
+
 (provide 'init-lsp-mode)
