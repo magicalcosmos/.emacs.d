@@ -61,14 +61,16 @@
           treemacs-tag-follow-delay              1.5
           treemacs-user-mode-line-format         nil
           treemacs-user-header-line-format       nil
-          treemacs-width                         35
+          treemacs-width                         45
+          treemacs-wide-toggle-width             70
+          treemacs-text-scale                    -1
           treemacs-width-is-initially-locked     t
           treemacs-workspace-switch-cleanup      t
           treemacs-is-never-other-window t)
 
     ;; The default width and height of the icons is 22 pixels. If you are
     ;; using a Hi-DPI display, uncomment this to double the icon size.
-    ;;(treemacs-resize-icons 44)
+    (treemacs-resize-icons 14)
 
     (treemacs-follow-mode t)
     (treemacs-filewatch-mode t)

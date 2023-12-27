@@ -61,7 +61,9 @@
 ;;   (add-hook 'emacs-startup-hook
 ;;             (lambda () (setq gc-cons-threshold normal-gc-cons-threshold))))
 
-(setq gc-cons-threshold 100000000)
+;; (setq gc-cons-threshold 100000000)
+(setq gc-cons-threshold most-positive-fixnum)
+(add-hook 'after-init-hook #'(lambda () (setq gc-cons-threshold 800000)))
 
 
 ;; Use spotlight search backend as a default for M-x locate (and helm/ivy
@@ -245,9 +247,6 @@
 (set-keyboard-coding-system 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
 
-;; Set font size 180 = 18pt
-(set-face-attribute 'default nil :height 160)
-
 
 ;;显示语法高亮
 (global-font-lock-mode t)
@@ -302,6 +301,16 @@
 (package-refresh-contents)
 (package-install 'use-package))
 (setq use-package-always-ensure t)
+
+;; Settings for exec-path-from-shell
+;; fix the PATH environment variable issue
+(use-package exec-path-from-shell
+  :ensure t
+  :when (or (memq window-system '(mac ns x))
+	    (unless cabins--os-win
+	      (daemonp)))
+  :init (exec-path-from-shell-initialize))
+
 
 (unless (package-installed-p 'quelpa)
   (with-temp-buffer
@@ -593,3 +602,9 @@ Supports exporting consult-grep to wgrep, file to wdeired, and consult-location 
 (global-set-key (kbd "<f2>") 'open-init-file)
 
 (set-face-attribute 'web-mode-css-rule-face nil :foreground "Pink3")
+
+;; Set font size 100 = 100pt
+(set-face-attribute 'default nil :height 100)
+
+(set-frame-font "Monaco-14" t t))
+

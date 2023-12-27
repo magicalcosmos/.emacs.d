@@ -1,8 +1,8 @@
 (require 'yasnippet)
 (yas-global-mode 1)
 
-(require 'lsp-bridge)
-(global-lsp-bridge-mode)
+;; (require 'lsp-bridge)
+;; (global-lsp-bridge-mode)
 
 
 (defvar bootstrap-version)
@@ -32,7 +32,7 @@
   (lsp-bridge-multi-lang-server-extension-list
     '((("ts" "tsx") . "typescript_eslint"))))
 
-    
+
 
 (with-eval-after-load 'xref
   (setq xref-search-program 'ripgrep)     ;project-find-regexp
@@ -46,7 +46,7 @@
  
   (general-nmap
     :states 'normal
-    "gd" '(lsp-bridge-find-impl :wk "jump to the definition")
+    "gd" '(lsp-bridge-find-def :wk "jump to the definition")
     "gr" '(lsp-bridge-find-references :wk "find all references")
     "go" '(lsp-bridge-find-impl-other-window :wk "jump to the definition in other-window")
     "gt" '(lsp-bridge-popup-documentation :wk " lookup documentation of symbol under the cursor")
