@@ -86,5 +86,8 @@
 (global-set-key (kbd "M-p") 'scroll-down-line)
 
 
+(global-set-key "\M-k" '(lambda () (interactive) (kill-line 0)) ) ;M-k kills to the left
+
+
 (provide 'init-keybindings)
 

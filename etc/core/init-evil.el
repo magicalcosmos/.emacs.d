@@ -25,9 +25,9 @@
   (add-hook 'evil-mode-hook 'bl/evil-hook)
   (evil-mode 1)
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-  (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
-  (define-key evil-normal-state-map (kbd "C-j") 'evil-paste-pop-next)
-  (define-key evil-normal-state-map (kbd "C-k") 'evil-paste-pop)
+  ;; (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+  ;; (define-key evil-normal-state-map (kbd "C-j") 'evil-paste-pop-next)
+  ;; (define-key evil-normal-state-map (kbd "C-k") 'evil-paste-pop)
 
   ;; Use visual line motions even outside of visual-line-mode buffers
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)

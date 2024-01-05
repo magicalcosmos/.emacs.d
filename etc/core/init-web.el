@@ -16,7 +16,7 @@
 :commands web-mode
 :mode (
   ("\\.html?\\'" . web-mode)
-  ;; ("\\.ts\\'" . web-mode)  ;;  会自动格式化，有问题
+  ("\\.ts\\'" . web-mode)  ;;  会自动格式化，有问题
   ;; ("\\.tsx\\'" . web-mode)
   ;; ("\\.jsx\\'" . web-mode)
   ("\\.vue?\\'" . web-mode)
@@ -43,7 +43,7 @@
 ;; typescript
    (setq web-mode-attr-indent-offset nil)
    (setq web-mode-tag-auto-close-style 2)
-   (setq web-mode-enable-auto-closing t)
+  ;;  (setq web-mode-enable-auto-closing t)
    (setq tab-width 2)
    
 

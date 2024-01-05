@@ -23,7 +23,7 @@
     ;; Number the candidates (use M-1, M-2 etc to select completions).
     (setq company-show-numbers t)
     ;; Trigger completion immediately.
-    (setq company-minimum-prefix-length 1) ; 只需敲 1 个字母就开始进行自动补全
+    (setq company-minimum-prefix-length 3) ; 只需敲 1 个字母就开始进行自动补全
     (setq company-tooltip-align-annotations t)
     (setq company-idle-delay 0.0)
     (setq company-selection-wrap-around t)
