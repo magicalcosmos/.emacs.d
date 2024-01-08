@@ -34,7 +34,7 @@
 
 (require 'init-lsp-treemacs)
 
-(require 'init-syntaxcheck)
+;; (require 'init-syntaxcheck)
 
 ;; (require 'init-helm-lsp)
 ;; (require 'init-helm-xref)

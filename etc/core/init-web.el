@@ -16,7 +16,7 @@
 :commands web-mode
 :mode (
   ("\\.html?\\'" . web-mode)
-  ("\\.ts\\'" . web-mode)  ;;  会自动格式化，有问题
+  ;; ("\\.ts\\'" . web-mode)  ;;  会自动格式化，有问题
   ;; ("\\.tsx\\'" . web-mode)
   ;; ("\\.jsx\\'" . web-mode)
   ("\\.vue?\\'" . web-mode)
@@ -44,7 +44,7 @@
    (setq web-mode-attr-indent-offset nil)
    (setq web-mode-tag-auto-close-style 2)
    (setq web-mode-enable-auto-closing t)
-   (setq tab-width 2)
+   (setq tab-width 1)
    
 
 
@@ -78,5 +78,7 @@
 ;;  (eval-after-load 'format-all
 ;;    '(add-hook 'java-mode-hook
 ;;               (lambda() (setq format-all-formatters '(("Java" (astyle "--mode=java")))))))
-                                         
+
+(setq-default typescript-indent-level 2)
+                                       
 (provide 'init-web)
