@@ -37,6 +37,7 @@
 
 
 (use-package wgrep
+  :ensure t
   :bind
   (
    :map grep-mode-map

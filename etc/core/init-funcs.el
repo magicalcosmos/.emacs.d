@@ -94,6 +94,52 @@ Supports exporting consult-grep to wgrep, file to wdeired, and consult-location 
   "Add subdirectories to `load-path'."
   (let ((default-directory (expand-file-name "etc/lisp" user-emacs-directory)))
     (normal-top-level-add-subdirs-to-load-path)))
+    
+;;;; my/split-window-right-pick
+(defun my/split-window-right-pick()
+  "Like `split-window-right' except it lets you pick the buffer on the other side"
+  (interactive)
+  (split-window-right)
+  (other-window 1)
+  (condition-case nil
+      (consult-buffer)
+    (quit (delete-window))))
+
+;;;; my/split-window-below-pick
+(defun my/split-window-below-pick()
+  "Like `split-window-below' except it lets you pick the buffer on the other side"
+  (interactive)
+  (split-window-below)
+  (other-window 1)
+  (condition-case nil
+      (consult-buffer)
+    (quit (delete-window))))
+
+;;;; my/replace-chat-at-point
+(defun my/replace-char-at-point(char)
+  "Replaces the caracter at point by `CHAR'"
+  (interactive "cReplace character at point with : ")
+  (delete-char 1)
+  (insert-char char)
+  (backward-char 1))
+
+;;;; my/delete-char-or-kill-region
+(defun my/delete-char-or-kill-region()
+  "If mark is active, kill region, otherwise delete-char"
+  (interactive)
+  (call-interactively
+    (if mark-active
+        'kill-region
+      'delete-char)))
+
+;;;; my/comment-dwim
+(defun my/comment-dwim()
+  "Like `comment-dwim', but comment line if cursor at beginning of line"
+  (interactive)
+  (call-interactively
+    (if (or (region-active-p) (/= (line-beginning-position) (point)))
+        #'comment-dwim
+      #'comment-line)))
 
 (advice-add #'package-initialize :after #'update-load-path)
 (advice-add #'package-initialize :after #'add-subdirs-to-load-path)
