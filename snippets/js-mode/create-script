@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: vue3-create-script
-# key: vue3cs
-# --
-
-<script setup lang="$1ts">
-</script>

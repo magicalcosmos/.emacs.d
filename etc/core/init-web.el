@@ -44,7 +44,7 @@
    (setq web-mode-attr-indent-offset nil)
    (setq web-mode-tag-auto-close-style 2)
    (setq web-mode-enable-auto-closing t)
-   (setq tab-width 1)
+   (setq tab-width 2)
    
 
 
@@ -54,7 +54,7 @@
       ("vue" . (ac-source-words-in-buffer ac-source-abbrev))
       ("html" . (ac-source-words-in-buffer ac-source-abbrev))))
   (setq web-mode-enable-engine-detection t)
-  (setq web-mode-enable-auto-pairing nil)
+  (setq web-mode-enable-auto-pairing t)
   (setq web-mode-enable-auto-close-style t)
   (setq web-mode-enable-auto-quoting t) ; this fixes the quote problem I mentioned
   (add-hook 'css-mode-hook
@@ -63,7 +63,8 @@
       )
   )
 )
-
+;; (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . web-mode))
+;; (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
@@ -78,7 +79,5 @@
 ;;  (eval-after-load 'format-all
 ;;    '(add-hook 'java-mode-hook
 ;;               (lambda() (setq format-all-formatters '(("Java" (astyle "--mode=java")))))))
-
-(setq-default typescript-indent-level 2)
-                                       
+                                         
 (provide 'init-web)

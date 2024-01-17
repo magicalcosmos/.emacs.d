@@ -1,4 +1,7 @@
+;; 在vertico中的minibuffer可进行模糊搜索
+
 (use-package orderless
+  :ensure t
   :demand t
   :config
   (defvar +orderless-dispatch-alist

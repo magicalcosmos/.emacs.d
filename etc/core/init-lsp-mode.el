@@ -140,12 +140,4 @@
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\dist\\'")
   ;; or
   (add-to-list 'lsp-file-watch-ignored-files "[/\\\\]\\.*\\'"))
-  
-  (general-nmap
-    :states 'normal
-    "gd" '(lsp-ui-peek-find-definitions :wk "jump to the definition")
-    "gr" '(lsp-ui-peek-find-references :wk "find all references"))
-
-    (setf (alist-get 'web-mode lsp--formatting-indent-alist) 'web-mode-code-indent-offset)
-
 (provide 'init-lsp-mode)

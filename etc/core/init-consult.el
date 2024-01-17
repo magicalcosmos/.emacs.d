@@ -13,8 +13,7 @@
 
 ;; Example configuration for Consult
 (use-package consult
-  :bind ("C-c r e" . consult-grep)
-)
+  :ensure t)
 
 (eval-after-load 'consult
   (progn

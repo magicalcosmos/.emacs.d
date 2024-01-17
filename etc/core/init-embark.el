@@ -11,12 +11,8 @@
 
 ;; Author: brodyliao
 
-(use-package marginalia
-  :ensure t
-  :config
-  (marginalia-mode))
-
 (use-package embark
+  :ensure t
   :bind
   (
    :map minibuffer-mode-map
@@ -24,6 +20,8 @@
    )
   )
 
+(global-set-key (kbd "C-;") 'embark-act)
+(setq prefix-help-command 'embark-prefix-help-command)
 
 ;; Consult users will also want the embark-consult package.
 (use-package embark-consult
@@ -35,29 +33,4 @@
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
-
-(use-package wgrep
-  :ensure t
-  :bind
-  (
-   :map grep-mode-map
-   ("C-c C-q" . wgrep-change-to-wgrep-mode)
-   )
-  )
-  
-(setq wgrep-auto-save-buffer t)
-
-(eval-after-load
-    'consult
-  '(eval-after-load
-       'embark
-     '(progn
-	(require 'embark-consult)
-	(add-hook
-	 'embark-collect-mode-hook
-	 #'consult-preview-at-point-mode))))
-
-(define-key minibuffer-local-map (kbd "C-c C-e") 'embark-export-write)
-
-
-  (provide 'init-embark)
+(provide 'init-embark)
