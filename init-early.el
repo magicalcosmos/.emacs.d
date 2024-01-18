@@ -49,4 +49,6 @@
 
 (require 'init-typescript)
 
+(require 'init-treemacs)
+
 (require 'init-keybindings)
