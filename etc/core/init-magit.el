@@ -11,7 +11,7 @@
 (use-package git-timemachine
   :ensure t
   :defer 10)
-  
+
 (use-package magit
   :ensure t
   :bind ("C-M-;" . magit-status)
@@ -22,14 +22,15 @@
 ;; A git blame plugin for emacs inspired by VS Code’s GitLens plugin and Vim plugin
 (use-package blamer
   :ensure t
-  :bind (("s-i" . blamer-show-commit-info))
+  :bind (("s-i" . blamer-show-commit-info)
+         ("C-c i" . blamer-show-posframe-commit-info))
   :defer 20
   :custom
   (blamer-idle-time 0.3)
   (blamer-min-offset 70)
   :custom-face
   (blamer-face ((t :foreground "#7a88cf"
-                    :background unspecified
+                    :background nil
                     :height 140
                     :italic t)))
   :config

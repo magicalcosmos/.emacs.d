@@ -48,4 +48,18 @@
 
 (evil-mode 1)
 
+(use-package evil-collection
+  :ensure t
+  :after evil
+  :init
+  (setq evil-collection-company-use-tng nil)  ;; Is this a bug in evil-collection?
+  :custom
+  (evil-collection-outline-bind-tab-p nil)
+  :config
+  (setq evil-collection-mode-list
+        (remove 'lispy evil-collection-mode-list))
+  (evil-collection-init))
+
+(defalias 'forward-evil-word 'forward-evil-symbol)
+
 (provide 'init-evil)
