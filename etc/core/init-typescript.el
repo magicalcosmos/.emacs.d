@@ -36,8 +36,8 @@
  '(tsi :type git :host github :repo "orzechowskid/tsi.el"))
 
   (add-hook 'typescript-mode-hook (lambda () (tsi-typescript-mode 1)))
-  ;; (add-hook 'json-mode-hook (lambda () (tsi-json-mode 1)))
-  ;; (add-hook 'css-mode-hook (lambda () (tsi-css-mode 1)))
-  ;; (add-hook 'scss-mode-hook (lambda () (tsi-scss-mode 1)))
+  (add-hook 'json-mode-hook (lambda () (tsi-json-mode 1)))
+  (add-hook 'css-mode-hook (lambda () (tsi-css-mode 1)))
+  (add-hook 'scss-mode-hook (lambda () (tsi-scss-mode 1)))
 
 (provide 'init-typescript)

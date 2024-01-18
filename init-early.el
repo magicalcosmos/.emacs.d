@@ -39,7 +39,7 @@
 
 (require 'init-which-key)
 
-;; (require 'init-undo-tree)
+(require 'init-undo-tree)
 
 (require 'init-evil)
 

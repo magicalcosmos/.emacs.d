@@ -13,7 +13,6 @@
 
 (use-package undo-tree
   :ensure t
-  :diminish
   :config
   (progn
     (global-undo-tree-mode 1)
@@ -22,5 +21,6 @@
     (setq undo-tree-visualizer-diff t)
     (setq undo-tree-history-directory-alist '(("." . "~/undo-tree")))
     ))
+
 
 (provide 'init-undo-tree)

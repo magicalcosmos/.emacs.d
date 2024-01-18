@@ -32,7 +32,7 @@
     ("C-c a" . lsp-execute-code-action)
   )
   :hook (
-   (go-mode . lsp-deferred)   
+   (go-mode . lsp-deferred)   ;; 做跳转用的hook
    (dart-mode . lsp-deferred)
    (js-mode . lsp-deferred)
    (json-mode . lsp-deferred)
@@ -49,38 +49,14 @@
    (lsp-mode . lsp-enable-which-key-integration)
    )
   :config
-  (setq lsp-log-io nil) ;; Don't log everything = speed
-  (setq lsp-keymap-prefix "C-c l")
-  (setq lsp-restart 'auto-restart)
-  ;; (setq lsp-ui-sideline-show-diagnostics t)
-  ;; (setq lsp-ui-sideline-show-hover t)
-  ;;(setq lsp-ui-sideline-show-code-actions t)
-  ;; (setq lsp-eldoc-render-all t)
-
-  (add-hook 'prog-mode-hook #'lsp)
-  (add-hook 'go-mode-hook #'lsp)
-  (add-hook 'python-mode-hook #'lsp)
-  (add-hook 'c++-mode-hook #'lsp)
-  (add-hook 'c-mode-hook #'lsp)
-  (add-hook 'rust-mode-hook #'lsp)
-  (add-hook 'html-mode-hook #'lsp)
-  (add-hook 'js-mode-hook #'lsp)
-  (add-hook 'typescript-mode-hook #'lsp)
-  (add-hook 'json-mode-hook #'lsp)
-  (add-hook 'yaml-mode-hook #'lsp)
-  (add-hook 'dockerfile-mode-hook #'lsp)
-  (add-hook 'shell-mode-hook #'lsp)
-  (add-hook 'css-mode-hook #'lsp)
-  (add-hook 'scss-mode-hook #'lsp)
-  (add-hook 'vue-mode-hook #'lsp)
-  (add-hook 'dart-mode-hook 'lsp)
-  (lsp-register-client
-   (make-lsp-client :new-connection (lsp-stdio-connection "pyls")
-                    :major-modes '(python-mode)
-                    :server-id 'pyls))
   (setq company-minimum-prefix-length 1
-        company-idle-delay 0.500) ;; default is 0.2
-  ;; (require 'lsp-clients)
+        lsp-log-io                    nil ;; Don't log everything = speed
+        lsp-keymap-prefix             "C-c l"
+        lsp-restart                   'auto-restart
+        company-idle-delay            0.500) ;; default is 0.2
+        ;; lsp-ui-sideline-show-diagnostics t
+        ;; lsp-ui-sideline-show-code-actions t
+        ;; lsp-eldoc-render-all t
   :commands (lsp lsp-deferred)
 )
 
@@ -128,6 +104,24 @@
 (setq lsp-prefer-capf t)
 
 
+  ;; (add-hook 'prog-mode-hook #'lsp)
+  ;; (add-hook 'go-mode-hook #'lsp)
+  ;; (add-hook 'python-mode-hook #'lsp)
+  ;; (add-hook 'c++-mode-hook #'lsp)
+  ;; (add-hook 'c-mode-hook #'lsp)
+  ;; (add-hook 'rust-mode-hook #'lsp)
+  ;; (add-hook 'html-mode-hook #'lsp)
+  ;; (add-hook 'js-mode-hook #'lsp)
+  ;; (add-hook 'typescript-mode-hook #'lsp)
+  ;; (add-hook 'json-mode-hook #'lsp)
+  ;; (add-hook 'yaml-mode-hook #'lsp)
+  ;; (add-hook 'dockerfile-mode-hook #'lsp)
+  ;; (add-hook 'shell-mode-hook #'lsp)
+  ;; (add-hook 'css-mode-hook #'lsp)
+  ;; (add-hook 'scss-mode-hook #'lsp)
+  ;; (add-hook 'vue-mode-hook #'lsp)
+  ;; (add-hook 'dart-mode-hook 'lsp)
+
 (with-eval-after-load 'lsp-mode
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.vscode\\'")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.cache\\'")
@@ -140,4 +134,6 @@
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\dist\\'")
   ;; or
   (add-to-list 'lsp-file-watch-ignored-files "[/\\\\]\\.*\\'"))
+  
+  
 (provide 'init-lsp-mode)
