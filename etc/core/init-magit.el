@@ -33,7 +33,6 @@
                     :background nil
                     :height 140
                     :italic t)))
-  :config
-  (global-blamer-mode 1))
+)
 
 (provide 'init-magit)
