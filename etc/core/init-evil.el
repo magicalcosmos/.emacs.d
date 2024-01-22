@@ -43,6 +43,18 @@
     (evil-global-set-key 'motion (kbd "<right>") 'bl/dont-arrow-me-bro)
     (evil-global-set-key 'motion (kbd "<down>") 'bl/dont-arrow-me-bro)
     (evil-global-set-key 'motion (kbd "<up>") 'bl/dont-arrow-me-bro))
+  ;; (with-eval-after-load 'evil-maps
+  ;;   (define-key evil-normal-state-map (kbd "gd") #'xref-find-definitions)
+  ;;   (define-key evil-normal-state-map (kbd "<f12>") #'xref-find-definitions)
+  ;;   (define-key evil-insert-state-map (kbd "C-n") nil) ; avoid conflict with company tooltip selection
+  ;;   (define-key evil-insert-state-map (kbd "C-p") nil) ; avoid conflict with company tooltip selection
+  ;;   (define-key evil-normal-state-map (kbd "C-p") nil) ; avoid conflict with WSL find-file
+  ;;   (define-key evil-insert-state-map (kbd "C-S-C") #'evil-yank)         ; for WSL
+  ;;   (define-key evil-normal-state-map (kbd "C-S-C") #'evil-yank)         ; for WSL
+  ;;   (define-key evil-insert-state-map (kbd "C-S-V") #'evil-paste-before) ; for WSL
+  ;;   )
+  (evil-ex-define-cmd "q" #'kill-this-buffer)
+  (evil-ex-define-cmd "wq" #'bl/save-and-kill-this-buffer)
 
   (evil-set-initial-state 'messages-buffer-mode 'normal)
   (evil-set-initial-state 'dashboard-mode 'normal))

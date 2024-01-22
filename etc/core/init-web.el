@@ -16,12 +16,12 @@
 :commands web-mode
 :mode (
   ("\\.html?\\'" . web-mode)
-  ("\\.ts\\'" . web-mode)  ;;  会自动格式化，有问题
-  ("\\.tsx\\'" . web-mode)
-  ("\\.jsx\\'" . web-mode)
+  ("\\.tsx?\\'" . web-mode);;  会自动格式化，有问题
+  ("\\.jsx?\\'" . web-mode)
   ("\\.vue?\\'" . web-mode)
   ("\\.scss\\'" . web-mode)
   ("\\.css\\'" . web-mode)
+  ("\\.json\\'" . web-mode)
 )
 :config
   (setq web-mode-markup-indent-offset 2)
@@ -64,8 +64,7 @@
       )
   )
 )
-;; (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . web-mode))
-;; (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . web-mode))
+
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
@@ -73,29 +72,5 @@
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-
-  ;;  :config
-  ;;  (setq-default format-all-formatters '(("C"     (astyle "--mode=c"))
-  ;;                                        ("Shell" (shfmt "-i" "4" "-ci")))))
-;;  (eval-after-load 'format-all
-;;    '(add-hook 'java-mode-hook
-;;               (lambda() (setq format-all-formatters '(("Java" (astyle "--mode=java")))))))
-                                         
-(use-package emmet-mode
-  :ensure t
-  :hook ((html-mode       . emmet-mode)
-         (css-mode        . emmet-mode)
-         (js-mode         . emmet-mode)
-         (js-jsx-mode     . emmet-mode)
-         (typescript-mode . emmet-mode)
-         (web-mode        . emmet-mode))
-  :config
-  (setq emmet-insert-flash-time 0.001) ; effectively disabling it
-  (add-hook 'js-jsx-mode-hook #'(lambda ()
-                                  (setq-local emmet-expand-jsx-className? t)))
-  (add-hook 'web-mode-hook #'(lambda ()
-                               (setq-local emmet-expand-jsx-className? t))))
-
-
 
 (provide 'init-web)

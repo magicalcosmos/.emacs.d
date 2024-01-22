@@ -38,104 +38,90 @@
   (lsp-typescript-suggest-enabled nil)
   (lsp-typescript-suggest-complete-js-docs nil)
   (lsp-typescript-suggestion-actions-enabled nil)
-  
-  (lsp-enable-on-type-formatting nil)
-  (lsp-diagnostics-provide nil)
 
   :bind (
     ("C-c l" . lsp-command-map)
     ("C-c d" . lsp-describe-thing-at-point)
     ("C-c a" . lsp-execute-code-action)
   )
-  :hook ((go-mode  ;; 做跳转用的hook
-          dart-mode
-          js-mode
-          json-mode
-          css-mode
-          html-mode
-          python-mode
-          c-mode
-          typescript-mode
-          ymal-mode
-          shell-mode
-          dockerfile-mode
-          vue-mode
-          web-mode) .lsp-deferred)
-  ;;  (lsp-mode . lsp-enable-which-key-integration)
-  :config
-  (setq company-minimum-prefix-length 1
-        lsp-log-io                    nil ;; Don't log everything = speed
-        lsp-keymap-prefix             "C-c l"
-        lsp-restart                   'auto-restart
-        company-idle-delay            0.500
-        lsp-auto-guess-root           t
-  ) 
-  ;; default is 0.2
-        ;; lsp-ui-sideline-show-diagnostics t
-        ;; lsp-ui-sideline-show-code-actions t
-        ;; lsp-eldoc-render-all t
+  :hook (
+   (go-mode . lsp-deferred)   ;; 做跳转用的hook
+   (dart-mode . lsp-deferred)
+   (json-mode . lsp-deferred)
+   (css-mode . lsp-deferred)
+   (html-mode . lsp-deferred)
+   (python-mode . lsp-deferred)
+   (c-mode . lsp-deferred)
+   (js-jsx-mode . lsp-deferred)
+   (typescript-mode . lsp-deferred)
+   (ymal-mode . lsp-deferred)
+   (shell-mode . lsp-deferred)
+   (dockerfile-mode . lsp-deferred)
+   (vue-mode . lsp-deferred)
+   (web-mode . lsp-deferred)
+   (lsp-mode . lsp-enable-which-key-integration)
+   )
   :commands (lsp lsp-deferred)
+  :config
+  (setq company-minimum-prefix-length 1)
+  (setq lsp-idle-delay 0.500)
+  (setq lsp-log-io nil)  ;; Don't log everything = speed
+  (setq lsp-keymap-prefix "C-c l")
+  (setq lsp-restart 'auto-restart)
+  (setq lsp-auto-guess-root nil)
+  (setq lsp-diagnostic-package t)
+  (setq lsp-diagnostic-package :none)
+  (setq lsp-enable-symbol-highlighting nil)
+  (setq lsp-enable-on-type-formatting nil)
+  (setq lsp-signature-auto-activate nil)
+  (setq lsp-modeline-code-actions-enable nil)
+  (setq lsp-modeline-diagnostics-enable nil)
+  (setq lsp-enable-folding nil)
+  ;; (setq read-process-output-max (* 1024 1024)) ;; 1mb
 )
 
-;; (use-package lsp-ui
-;;   :ensure t
-;;   :custom-face
-;;   (lsp-ui-doc-background ((t (:background unspecified))))
-;;   :init (setq lsp-enable-snippet nil
-;;               lsp-ui-sideline-enable nil
-;;               lsp-ui-peek-enable nil
-;;               lsp-ui-doc-enable t
-;;               lsp-ui-doc-position              'at-point
-;;               lsp-ui-doc-header                nil
-;;               lsp-ui-doc-border                "white"
-;;               lsp-ui-doc-include-signature     t
+(use-package lsp-ui
+  :ensure t
+  :custom-face
+  (lsp-ui-doc-background ((t (:background unspecified))))
+  :init (setq lsp-enable-snippet nil
+              lsp-ui-sideline-enable nil
+              lsp-ui-peek-enable nil
+              lsp-ui-doc-enable t
+              lsp-ui-doc-position              'at-point
+              lsp-ui-doc-header                nil
+              lsp-ui-doc-border                "white"
+              lsp-ui-doc-include-signature     t
 
-;;               lsp-ui-sideline-show-diagnostics t
-;;               lsp-ui-sideline-update-mode      'point
-;;               lsp-ui-sideline-delay            2
-;;               lsp-ui-sideline-ignore-duplicate t
-;;               lsp-ui-sideline-show-hover t
-;;               lsp-ui-sideline-show-code-actions t
-
-
-;;               lsp-ui-peek-always-show          t
-;;               lsp-ui-flycheck-enable           nil
-
-;;               lsp-ui-imenu-auto-refresh t
-
-;;               lsp-ui-peek-jump-backward t
-;;               lsp-ui-peek-jump-backward t
-;;               lsp-ui-peek-find-workspace-symbol "pattern 0"
-;;               ;; If the server supports custom cross references
-;;               lsp-ui-peek-find-custom "$cquery/base"
-;;               lsp-ui-peek-show-directory t
-;;               )
-;;   :bind (:map lsp-ui-mode-map
-;;               ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-;;               ([remap xref-find-references] . lsp-ui-peek-find-references)
-;;               ("C-c u" . lsp-ui-imenu))
-;;   :config
-;;   (setq lsp-ui-sideline-ignore-duplicate t)
-;;   (add-hook 'lsp-mode-hook 'lsp-ui-mode))
+              lsp-ui-sideline-show-diagnostics t
+              lsp-ui-sideline-update-mode      'point
+              lsp-ui-sideline-delay            2
+              lsp-ui-sideline-ignore-duplicate t
+              lsp-ui-sideline-show-hover t
+              lsp-ui-sideline-show-code-actions t
 
 
-  ;; (add-hook 'prog-mode-hook #'lsp)
-  ;; (add-hook 'go-mode-hook #'lsp)
-  ;; (add-hook 'python-mode-hook #'lsp)
-  ;; (add-hook 'c++-mode-hook #'lsp)
-  ;; (add-hook 'c-mode-hook #'lsp)
-  ;; (add-hook 'rust-mode-hook #'lsp)
-  ;; (add-hook 'html-mode-hook #'lsp)
-  ;; (add-hook 'js-mode-hook #'lsp)
-  ;; (add-hook 'typescript-mode-hook #'lsp)
-  ;; (add-hook 'json-mode-hook #'lsp)
-  ;; (add-hook 'yaml-mode-hook #'lsp)
-  ;; (add-hook 'dockerfile-mode-hook #'lsp)
-  ;; (add-hook 'shell-mode-hook #'lsp)
-  ;; (add-hook 'css-mode-hook #'lsp)
-  ;; (add-hook 'scss-mode-hook #'lsp)
-  ;; (add-hook 'vue-mode-hook #'lsp)
-  ;; (add-hook 'dart-mode-hook 'lsp)
+              lsp-ui-peek-always-show          t
+              lsp-ui-flycheck-enable           nil
+
+              lsp-ui-imenu-auto-refresh t
+
+              lsp-ui-peek-jump-backward t
+              lsp-ui-peek-jump-backward t
+              lsp-ui-peek-find-workspace-symbol "pattern 0"
+              ;; If the server supports custom cross references
+              lsp-ui-peek-find-custom "$cquery/base"
+              lsp-ui-peek-show-directory t
+              )
+  :bind (:map lsp-ui-mode-map
+              ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+              ([remap xref-find-references] . lsp-ui-peek-find-references)
+              ("C-c u" . lsp-ui-imenu))
+  :config
+  (setq lsp-ui-sideline-ignore-duplicate t)
+  (add-hook 'lsp-mode-hook 'lsp-ui-mode))
+
+  ;; (add-hook 'web-mode-hook #'lsp-flycheck-enable) ; enable flycheck-lsp for web-mode locally
 
 (with-eval-after-load 'lsp-mode
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.vscode\\'")
@@ -150,11 +136,5 @@
   ;; (add-to-list 'lsp-language-id-configuration '(js-jsx-mode . "javascriptreact"))
   ;; or
   (add-to-list 'lsp-file-watch-ignored-files "[/\\\\]\\.*\\'"))
-
-
-  ;; (add-hook 'web-mode-hook #'lsp-flycheck-enable) ; enable flycheck-lsp for web-mode locally
-  (setq read-process-output-max (* 1024 1024)) ;; 1mb
-  (setq lsp-prefer-capf t)
-  
   
 (provide 'init-lsp-mode)

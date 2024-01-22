@@ -49,10 +49,8 @@
 
 (require 'init-web)
 
-;; (require 'init-typescript)
-
 (require 'init-treemacs)
 
-;; (require 'init-syntaxcheck)
+(require 'init-pdf-tools)
 
 (require 'init-keybindings)

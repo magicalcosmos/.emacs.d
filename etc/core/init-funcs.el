@@ -32,4 +32,10 @@
 (message "Arrow keys are Forbidden for evil, you know?"))
 
 
+(defun bl/save-and-kill-this-buffer ()
+  (interactive)
+  (save-buffer)
+  (kill-this-buffer))
+
+
 (provide 'init-funcs)

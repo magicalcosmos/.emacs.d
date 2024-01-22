@@ -1,5 +1,6 @@
 
-
+;; Emacs key bindings
+(global-set-key (kbd "M-/") 'evilnc-comment-or-uncomment-lines)
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
@@ -34,9 +35,16 @@
   "gmp"  'magit-merge-preview
   "gr"  'magit-rebase)
 
+
 ;; lsp-mode
+  (general-nmap
+    :states 'normal
+    "gd" '(lsp-find-definition :wk "jump to the definition")
+    "gr" '(lsp-find-references :wk "find all references"))
+;; pop ui for selection
   ;; (general-nmap
   ;;   :states 'normal
-  ;;   "gd" '(lsp-find-definition :wk "jump to the definition")
-  ;;   "gr" '(lsp-find-references :wk "find all references"))
+  ;;   "gd" '(lsp-ui-peek-find-definitions :wk "jump to the definition")
+  ;;   "gr" '(lsp-ui-peek-find-references :wk "find all references"))
+
 (provide 'init-keybindings)

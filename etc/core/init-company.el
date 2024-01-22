@@ -35,7 +35,6 @@
   :ensure t
   :hook (company-mode . company-box-mode))
 
-
 (setq tab-always-indent 'complete)
 
 (provide 'init-company)
