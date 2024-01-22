@@ -1,5 +1,5 @@
-;; (use-package modus-themes
-;;   :ensure t)
+(use-package modus-themes
+  :ensure t)
 
 ;; modus-operandi
 ;; modus-operandi-tinted
