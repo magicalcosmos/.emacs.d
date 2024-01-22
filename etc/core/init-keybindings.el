@@ -35,8 +35,8 @@
   "gr"  'magit-rebase)
 
 ;; lsp-mode
-  (general-nmap
-    :states 'normal
-    "gd" '(lsp-find-definition :wk "jump to the definition")
-    "gr" '(lsp-find-references :wk "find all references"))
+  ;; (general-nmap
+  ;;   :states 'normal
+  ;;   "gd" '(lsp-find-definition :wk "jump to the definition")
+  ;;   "gr" '(lsp-find-references :wk "find all references"))
 (provide 'init-keybindings)

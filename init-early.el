@@ -33,6 +33,7 @@
 
 (require 'init-consult)
 
+
 (require 'init-lsp-mode)
 
 (require 'init-company)
@@ -47,8 +48,10 @@
 
 (require 'init-web)
 
-(require 'init-typescript)
+;; (require 'init-typescript)
 
 (require 'init-treemacs)
+
+;; (require 'init-syntaxcheck)
 
 (require 'init-keybindings)

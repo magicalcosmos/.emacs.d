@@ -16,9 +16,9 @@
 :commands web-mode
 :mode (
   ("\\.html?\\'" . web-mode)
-  ;; ("\\.ts\\'" . web-mode)  ;;  会自动格式化，有问题
-  ;; ("\\.tsx\\'" . web-mode)
-  ;; ("\\.jsx\\'" . web-mode)
+  ("\\.ts\\'" . web-mode)  ;;  会自动格式化，有问题
+  ("\\.tsx\\'" . web-mode)
+  ("\\.jsx\\'" . web-mode)
   ("\\.vue?\\'" . web-mode)
   ("\\.scss\\'" . web-mode)
   ("\\.css\\'" . web-mode)

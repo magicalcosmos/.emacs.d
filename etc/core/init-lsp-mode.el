@@ -1,3 +1,4 @@
+
 (use-package lsp-mode
   :ensure t
   :custom
@@ -7,8 +8,6 @@
   (lsp-enable-imenu t)
   (lsp-enable-completion-at-point t)
   (lsp-eldoc-hook nil)
-  (lsp-javascript-suggest-complete-js-docs t)
-  (lsp-typescript-suggest-complete-js-docs t)
   
   ;; what to use when checking on-save. "check" is default, I prefer clippy
   (lsp-rust-analyzer-cargo-watch-command "clippy")
@@ -26,6 +25,23 @@
   (lsp-headerline-breadcrumb-enable t)
   (lsp-treemacs-sync-mode 1)
   (lsp-completion-enable nil)
+
+  ;; js
+  (lsp-javascript-suggest-complete-js-docs nil)
+  (lsp-javascript-auto-closing-tags nil)
+  (lsp-javascript-suggest-enabled nil)
+  (lsp-javascript-suggest-auto-imports nil)
+  (lsp-Javascript-suggestion-actions-enabled nil)
+  ;; ts
+  (lsp-typescript-auto-closing-tags nil)
+  (lsp-typescript-suggest-auto-imports nil)
+  (lsp-typescript-suggest-enabled nil)
+  (lsp-typescript-suggest-complete-js-docs nil)
+  (lsp-typescript-suggestion-actions-enabled nil)
+  
+  (lsp-enable-on-type-formatting nil)
+  (lsp-diagnostics-provide nil)
+
   :bind (
     ("C-c l" . lsp-command-map)
     ("C-c d" . lsp-describe-thing-at-point)
@@ -60,46 +76,46 @@
   :commands (lsp lsp-deferred)
 )
 
-(use-package lsp-ui
-  :ensure t
-  :custom-face
-  (lsp-ui-doc-background ((t (:background unspecified))))
-  :init (setq lsp-enable-snippet nil
-              lsp-ui-sideline-enable nil
-              lsp-ui-peek-enable nil
-              lsp-ui-doc-enable t
-              lsp-ui-doc-position              'at-point
-              lsp-ui-doc-header                nil
-              lsp-ui-doc-border                "white"
-              lsp-ui-doc-include-signature     t
+;; (use-package lsp-ui
+;;   :ensure t
+;;   :custom-face
+;;   (lsp-ui-doc-background ((t (:background unspecified))))
+;;   :init (setq lsp-enable-snippet nil
+;;               lsp-ui-sideline-enable nil
+;;               lsp-ui-peek-enable nil
+;;               lsp-ui-doc-enable t
+;;               lsp-ui-doc-position              'at-point
+;;               lsp-ui-doc-header                nil
+;;               lsp-ui-doc-border                "white"
+;;               lsp-ui-doc-include-signature     t
 
-              lsp-ui-sideline-show-diagnostics t
-              lsp-ui-sideline-update-mode      'point
-              lsp-ui-sideline-delay            2
-              lsp-ui-sideline-ignore-duplicate t
-              lsp-ui-sideline-show-hover t
-              lsp-ui-sideline-show-code-actions t
+;;               lsp-ui-sideline-show-diagnostics t
+;;               lsp-ui-sideline-update-mode      'point
+;;               lsp-ui-sideline-delay            2
+;;               lsp-ui-sideline-ignore-duplicate t
+;;               lsp-ui-sideline-show-hover t
+;;               lsp-ui-sideline-show-code-actions t
 
 
-              lsp-ui-peek-always-show          t
-              lsp-ui-flycheck-enable           nil
+;;               lsp-ui-peek-always-show          t
+;;               lsp-ui-flycheck-enable           nil
 
-              lsp-ui-imenu-auto-refresh t
+;;               lsp-ui-imenu-auto-refresh t
 
-              lsp-ui-peek-jump-backward t
-              lsp-ui-peek-jump-backward t
-              lsp-ui-peek-find-workspace-symbol "pattern 0"
-              ;; If the server supports custom cross references
-              lsp-ui-peek-find-custom "$cquery/base"
-              lsp-ui-peek-show-directory t
-              )
-  :bind (:map lsp-ui-mode-map
-              ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-              ([remap xref-find-references] . lsp-ui-peek-find-references)
-              ("C-c u" . lsp-ui-imenu))
-  :config
-  (setq lsp-ui-sideline-ignore-duplicate t)
-  (add-hook 'lsp-mode-hook 'lsp-ui-mode))
+;;               lsp-ui-peek-jump-backward t
+;;               lsp-ui-peek-jump-backward t
+;;               lsp-ui-peek-find-workspace-symbol "pattern 0"
+;;               ;; If the server supports custom cross references
+;;               lsp-ui-peek-find-custom "$cquery/base"
+;;               lsp-ui-peek-show-directory t
+;;               )
+;;   :bind (:map lsp-ui-mode-map
+;;               ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+;;               ([remap xref-find-references] . lsp-ui-peek-find-references)
+;;               ("C-c u" . lsp-ui-imenu))
+;;   :config
+;;   (setq lsp-ui-sideline-ignore-duplicate t)
+;;   (add-hook 'lsp-mode-hook 'lsp-ui-mode))
 
 (setq lsp-prefer-capf t)
 
@@ -134,6 +150,7 @@
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\dist\\'")
   ;; or
   (add-to-list 'lsp-file-watch-ignored-files "[/\\\\]\\.*\\'"))
-  
-  
+
+
+
 (provide 'init-lsp-mode)
