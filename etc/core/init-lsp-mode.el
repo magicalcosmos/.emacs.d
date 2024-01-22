@@ -47,29 +47,30 @@
     ("C-c d" . lsp-describe-thing-at-point)
     ("C-c a" . lsp-execute-code-action)
   )
-  :hook (
-   (go-mode . lsp-deferred)   ;; 做跳转用的hook
-   (dart-mode . lsp-deferred)
-   (js-mode . lsp-deferred)
-   (json-mode . lsp-deferred)
-   (css-mode . lsp-deferred)
-   (html-mode . lsp-deferred)
-   (python-mode . lsp-deferred)
-   (c-mode . lsp-deferred)
-   (typescript-mode . lsp-deferred)
-   (ymal-mode . lsp-deferred)
-   (shell-mode . lsp-deferred)
-   (dockerfile-mode . lsp-deferred)
-   (vue-mode . lsp-deferred)
-   (web-mode . lsp-deferred)
-   (lsp-mode . lsp-enable-which-key-integration)
-   )
+  :hook ((go-mode  ;; 做跳转用的hook
+          dart-mode
+          js-mode
+          json-mode
+          css-mode
+          html-mode
+          python-mode
+          c-mode
+          typescript-mode
+          ymal-mode
+          shell-mode
+          dockerfile-mode
+          vue-mode
+          web-mode) .lsp-deferred)
+  ;;  (lsp-mode . lsp-enable-which-key-integration)
   :config
   (setq company-minimum-prefix-length 1
         lsp-log-io                    nil ;; Don't log everything = speed
         lsp-keymap-prefix             "C-c l"
         lsp-restart                   'auto-restart
-        company-idle-delay            0.500) ;; default is 0.2
+        company-idle-delay            0.500
+        lsp-auto-guess-root           t
+  ) 
+  ;; default is 0.2
         ;; lsp-ui-sideline-show-diagnostics t
         ;; lsp-ui-sideline-show-code-actions t
         ;; lsp-eldoc-render-all t
@@ -117,8 +118,6 @@
 ;;   (setq lsp-ui-sideline-ignore-duplicate t)
 ;;   (add-hook 'lsp-mode-hook 'lsp-ui-mode))
 
-(setq lsp-prefer-capf t)
-
 
   ;; (add-hook 'prog-mode-hook #'lsp)
   ;; (add-hook 'go-mode-hook #'lsp)
@@ -148,9 +147,14 @@
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.tmp\\'")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\static\\'")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\dist\\'")
+  ;; (add-to-list 'lsp-language-id-configuration '(js-jsx-mode . "javascriptreact"))
   ;; or
   (add-to-list 'lsp-file-watch-ignored-files "[/\\\\]\\.*\\'"))
 
 
-
+  ;; (add-hook 'web-mode-hook #'lsp-flycheck-enable) ; enable flycheck-lsp for web-mode locally
+  (setq read-process-output-max (* 1024 1024)) ;; 1mb
+  (setq lsp-prefer-capf t)
+  
+  
 (provide 'init-lsp-mode)

@@ -1,19 +1,11 @@
 
 
 (use-package all-the-icons
-  :ensure t
+  :straight (all-the-icons :type git :host github :repo "domtronn/all-the-icons.el" :branch "svg" :files (:defaults "svg"))
   :if (display-graphic-p))
 
-(use-package all-the-icons-dired
-  :ensure t)
 
-(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+(setq image-cache-eviction-delay nil) ;; or set it to a much longer time than 5 minutes
 
-(use-package all-the-icons-completion
-  :ensure t
-  :after (marginalia all-the-icons)
-  :hook (marginalia-mode . all-the-icons-completion-marginalia-setup)
-  :init
-  (all-the-icons-completion-mode))
 
 (provide 'init-icons)

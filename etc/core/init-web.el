@@ -39,6 +39,7 @@
   (setq web-mode-enable-current-element-highlight t)
   (setq web-mode-enable-current-column-highlight t)
   (setq web-mode-enable-auto-indentation nil)
+  (local-set-key (kbd "RET") 'newline-and-indent)
 
 ;; typescript
    (setq web-mode-attr-indent-offset nil)
@@ -50,9 +51,9 @@
 
   (setq web-mode-engines-alist '(("django"    . "\\.html\\'")))
   (setq web-mode-ac-sources-alist 
-    '(("css" . (ac-source-css-property))
+    '(("css" . (ac-source-css-property ac-source-emmet-css-snippets))
       ("vue" . (ac-source-words-in-buffer ac-source-abbrev))
-      ("html" . (ac-source-words-in-buffer ac-source-abbrev))))
+      ("html" . (ac-source-words-in-buffer ac-source-abbrev ac-source-emmet-html-aliases ac-source-emmet-html-snippets))))
   (setq web-mode-enable-engine-detection t)
   (setq web-mode-enable-auto-pairing t)
   (setq web-mode-enable-auto-close-style t)
@@ -80,4 +81,21 @@
 ;;    '(add-hook 'java-mode-hook
 ;;               (lambda() (setq format-all-formatters '(("Java" (astyle "--mode=java")))))))
                                          
+(use-package emmet-mode
+  :ensure t
+  :hook ((html-mode       . emmet-mode)
+         (css-mode        . emmet-mode)
+         (js-mode         . emmet-mode)
+         (js-jsx-mode     . emmet-mode)
+         (typescript-mode . emmet-mode)
+         (web-mode        . emmet-mode))
+  :config
+  (setq emmet-insert-flash-time 0.001) ; effectively disabling it
+  (add-hook 'js-jsx-mode-hook #'(lambda ()
+                                  (setq-local emmet-expand-jsx-className? t)))
+  (add-hook 'web-mode-hook #'(lambda ()
+                               (setq-local emmet-expand-jsx-className? t))))
+
+
+
 (provide 'init-web)

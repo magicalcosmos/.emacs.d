@@ -22,6 +22,7 @@
   (setq evil-want-C-i-jump nil)
   (setq evil-respect-visual-line-mode t)
   (setq evil-undo-system 'undo-tree)
+  ;; (evil-auto-indent nil)
   :config
   (add-hook 'evil-mode-hook 'bl/evil-hook)
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)

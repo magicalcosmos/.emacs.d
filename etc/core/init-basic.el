@@ -58,11 +58,15 @@
 ;; 不生成 lock 文件
 (setq create-lockfiles nil)
 
+(setq-default tab-width 2)
 
 ;; user custom config
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
   (load-file custom-file))
+
+
+  
 
 
 (provide 'init-basic)

@@ -33,6 +33,7 @@
 
 (require 'init-consult)
 
+(require 'init-flycheck)
 
 (require 'init-lsp-mode)
 

@@ -1,5 +1,5 @@
-(use-package modus-themes
-  :ensure t)
+;; (use-package modus-themes
+;;   :ensure t)
 
 ;; modus-operandi
 ;; modus-operandi-tinted
@@ -8,6 +8,13 @@
 ;; modus-vivendi-tinted
 ;; modus-vivendi-deuteranopia
 
-(load-theme 'modus-operandi t)
+;; (load-theme 'modus-operandi t)
+
+
+(use-package ef-themes
+ :ensure t)
+
+(load-theme 'ef-melissa-light t)
+
 
 (provide 'init-theme)
