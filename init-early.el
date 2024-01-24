@@ -37,6 +37,8 @@
 
 (require 'init-flycheck)
 
+(require 'init-web)
+
 (require 'init-lsp-mode)
 
 (require 'init-company)
@@ -48,8 +50,6 @@
 (require 'init-evil)
 
 (require 'init-magit)
-
-(require 'init-web)
 
 (require 'init-treemacs)
 

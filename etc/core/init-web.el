@@ -19,8 +19,8 @@
   ("\\.tsx?\\'" . web-mode);;  会自动格式化，有问题
   ("\\.jsx?\\'" . web-mode)
   ("\\.vue?\\'" . web-mode)
-  ("\\.scss\\'" . web-mode)
-  ("\\.css\\'" . web-mode)
+  ;; ("\\.scss\\'" . web-mode)
+  ;; ("\\.css\\'" . web-mode)
   ("\\.json\\'" . web-mode)
 )
 :config
@@ -52,6 +52,7 @@
   (setq web-mode-engines-alist '(("django"    . "\\.html\\'")))
   (setq web-mode-ac-sources-alist 
     '(("css" . (ac-source-css-property ac-source-emmet-css-snippets))
+      ("scss" . (ac-source-css-property ac-source-emmet-css-snippets))
       ("vue" . (ac-source-words-in-buffer ac-source-abbrev))
       ("html" . (ac-source-words-in-buffer ac-source-abbrev ac-source-emmet-html-aliases ac-source-emmet-html-snippets))))
   (setq web-mode-enable-engine-detection t)

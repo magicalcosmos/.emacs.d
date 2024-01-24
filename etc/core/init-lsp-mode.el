@@ -49,6 +49,7 @@
    (dart-mode . lsp-deferred)
    (json-mode . lsp-deferred)
    (css-mode . lsp-deferred)
+   (scss-mode . lsp-deferred)
    (html-mode . lsp-deferred)
    (python-mode . lsp-deferred)
    (c-mode . lsp-deferred)
@@ -61,7 +62,6 @@
    (web-mode . lsp-deferred)
    (lsp-mode . lsp-enable-which-key-integration)
    )
-  :commands (lsp lsp-deferred)
   :config
   (setq company-minimum-prefix-length 1)
   (setq lsp-idle-delay 0.500)
@@ -133,8 +133,16 @@
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.tmp\\'")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\static\\'")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\dist\\'")
-  ;; (add-to-list 'lsp-language-id-configuration '(js-jsx-mode . "javascriptreact"))
+  ;; (add-to-list 'lsp-language-id-configuration '(web-mode . "lsp"))
+  ;;      (lsp-register-client
+  ;;     ;; Git clone language server from https://github.com/lifeart/ember-language-server/tree/component-context-info-origin
+  ;;     ;; And build it
+  ;;      (make-lsp-client :new-connection (lsp-stdio-connection (list "node" (expand-file-name "~/www/ember-language-server/lib/start-server.js") "--stdio"))
+  ;;                       :activation-fn (lsp-activate-on "hbs")
+  ;;                       :server-id 'ember-language-server)))
   ;; or
   (add-to-list 'lsp-file-watch-ignored-files "[/\\\\]\\.*\\'"))
-  
+
+
+
 (provide 'init-lsp-mode)
