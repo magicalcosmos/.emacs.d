@@ -29,11 +29,11 @@
     (setq company-idle-delay 0.0)
     (setq company-selection-wrap-around t)
     (setq company-transformers '(company-sort-by-occurrence))
-    (setq company-backends
-        `((:separate company-files company-capf company-keywords )
-          (:separate company-abbrev company-dabbrev)))
-    ) ; 根据选择的频率进行排序，读者如果不喜欢可以去掉)
-
+    ;; (setq company-backends
+    ;;     `((:separate company-files company-capf company-keywords )
+    ;;       (:separate company-abbrev company-dabbrev)))
+    ;; ) ; 根据选择的频率进行排序，读者如果不喜欢可以去掉)
+)
 ;; With use-package:
 ;; (use-package company-box
 ;;   :ensure t
