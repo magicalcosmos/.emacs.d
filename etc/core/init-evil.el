@@ -60,7 +60,10 @@
   (evil-set-initial-state 'dashboard-mode 'normal))
 
 (evil-mode 1)
-
+(with-eval-after-load 'evil
+    (defalias #'forward-evil-word #'forward-evil-symbol)
+    ;; make evil-search-word look for symbol rather than word boundaries
+    (setq-default evil-symbol-word-search t))
 (use-package evil-collection
   :ensure t
   :after evil
@@ -73,6 +76,6 @@
         (remove 'lispy evil-collection-mode-list))
   (evil-collection-init))
 
-(defalias 'forward-evil-word 'forward-evil-symbol)
+;; (defalias 'forward-evil-word 'forward-evil-symbol)
 
 (provide 'init-evil)
