@@ -11,6 +11,8 @@
 
 ;; Author: brodyliao
 
+(require 'init-common)
+
 (require 'init-funcs)
 
 (require 'init-basic)
