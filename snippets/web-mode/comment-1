@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: code comments no parameter
+# key: /com
+# --
+
+/**
+ * $1
+ */

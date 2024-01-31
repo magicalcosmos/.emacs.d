@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: vue3-create-script
+# key: /vue3t
+# --
+<template>
+  $1
+</template>
+<script setup lang="$1:ts">
+  $0
+</script>

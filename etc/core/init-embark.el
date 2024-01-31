@@ -20,7 +20,6 @@
    )
   )
 
-(global-set-key (kbd "C-;") 'embark-act)
 (setq prefix-help-command 'embark-prefix-help-command)
 
 ;; Consult users will also want the embark-consult package.

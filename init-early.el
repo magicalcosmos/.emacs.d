@@ -21,6 +21,8 @@
 
 (require 'init-theme)
 
+(require 'init-yasnippet)
+
 (require 'init-ace-window)
 
 (require 'init-vertico)
@@ -54,5 +56,6 @@
 (require 'init-treemacs)
 
 (require 'init-pdf-tools)
+
 
 (require 'init-keybindings)

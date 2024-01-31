@@ -1,16 +1,14 @@
 
-;; Emacs key bindings
-(global-set-key (kbd "M-/") 'evilnc-comment-or-uncomment-lines)
-
+;; buffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; consult
 (global-set-key (kbd "C-s") 'consult-line)
 (global-set-key (kbd "M-s i") 'consult-imenu)
+(global-set-key (kbd "C-c p s") 'consult-ripgrep)
 
+;; project
 (global-set-key (kbd "C-c p f") 'project-find-file)
-(global-set-key (kbd "C-c p s") 'consult-grep)
-(global-set-key (kbd "C-c r e") 'consult-ripgrep)
 
 ;; magit
 (bl/leader-key-def
@@ -46,5 +44,9 @@
   ;;   :states 'normal
   ;;   "gd" '(lsp-ui-peek-find-definitions :wk "jump to the definition")
   ;;   "gr" '(lsp-ui-peek-find-references :wk "find all references"))
+
+
+;; embark
+(global-set-key (kbd "C-;") 'embark-act)
 
 (provide 'init-keybindings)

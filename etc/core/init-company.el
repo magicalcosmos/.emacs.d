@@ -41,6 +41,7 @@
 
 ;; prescient.el is a library which sorts and filters lists of candidates, such as appear when you use a package like Ivy or Company. Extension packages such as ivy-prescient.el and company-prescient.el adapt the library for usage with various frameworks.
 (use-package company-prescient
+  :ensure t
   :after company
   :config
   (company-prescient-mode))

@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: code comments with parameters
+# key: /comp
+# --
+
+/**
+ * $1
+ * @param $0
+ */
