@@ -12,6 +12,12 @@
 
 ;; Author: brodyliao
 
+;; get system type
+(defconst *is-mac* (eq system-type 'darwin))
+(defconst *is-linux* (eq system-type 'gnu/linux))
+(defconst *is-windows* (or (eq system-type 'ms-dos)(eq system-type 'windows-nt)))
+(defconst CACHE-DIR (expand-file-name "cache/" user-emacs-directory))
+
 (setq gc-cons-threshold most-positive-fixnum)
 
 
@@ -29,7 +35,10 @@
 (set-frame-parameter (selected-frame) 'alpha '(90 . 90))
 
 ;; 最大化, 非沉浸模式
-(toggle-frame-maximized)
+;; (toggle-frame-maximized)
+
+;; 最大化, 浸模式
+(toggle-frame-fullscreen)
 
 ;; Speed up startup
 (setq auto-mode-case-fold nil)
@@ -118,6 +127,11 @@
 
 ;; 缓解在快速移动时大量代码的语法高亮
 (setq redisplay-skip-fontification-on-input t)
+
+;; command key to meta for default
+(when *is-mac*
+  (setq mac-option-modifier 'super
+      mac-command-modifier 'meta ))
 
 
 (provide 'init-basic)
