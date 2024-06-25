@@ -1,0 +1,68 @@
+# -*- mode: snippet -*-
+# name: OD vue3 template
+# key: /odvue3
+# --
+
+<script>
+  import DialogWrapper from "@/components/common/dialog/DialogWrapper.vue";
+  export default {
+    components: {
+      DialogWrapper,
+    },
+    expose: [
+      'show',
+      'dismiss'
+    ],
+    data() {
+      return {
+        visible: false,
+      }
+    },
+    methods: {
+      show() {
+        this.visible = true;
+      },
+      dismiss() {
+        this.visible = false;
+      },
+    }
+  };
+</script>
+<template>
+  <DialogWrapper v-if="visible">
+    <template #content>
+      <section class="main">
+        <div class="content">
+        </div>
+      </section>
+    </template>
+  </DialogWrapper>
+</template>
+<style scoped>
+  * {
+    box-sizing: border-box;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .main {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    width: 100%
+  }
+
+  .content {
+    background-image: url('./images/Bg.png');
+    background-size: cover;
+    border-radius: 16px;
+    box-sizing: border-box;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    height: 432px;
+    position: relative;
+    width: 319px;
+  }
+  
+</style>
