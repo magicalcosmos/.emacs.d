@@ -1,4 +1,4 @@
-;;; init.el --- Load the full configuration -*- lexical-binding: t -*-
+;;; init-early.el --- Load the full configuration -*- lexical-binding: t -*-
 ;;; Commentary:
 
 ;; This file bootstraps the configuration, which is divided into
@@ -11,19 +11,19 @@
 
 ;; Author: brodyliao
 
-(require 'init-funcs)
+(require 'init-functions)
 
 (require 'init-basic)
 
+(require 'init-company)
+
+(require 'init-codeium)
+
+(require 'init-corfu)
+
+(require 'init-evil)
+
 (require 'init-general)
-
-(require 'init-icons)
-
-(require 'init-theme)
-
-(require 'init-yasnippet)
-
-(require 'init-ace-window)
 
 (require 'init-vertico)
 
@@ -31,31 +31,16 @@
 
 (require 'init-marginalia)
 
-(require 'init-embark)
-
 (require 'init-consult)
 
-(require 'init-ranger)
+(require 'init-embark)
 
-(require 'init-flycheck)
+(require 'init-undo-tree)
+
+(require 'init-ace-window)
+
+(require 'init-treemacs)
 
 (require 'init-web)
 
 (require 'init-lsp-mode)
-
-(require 'init-company)
-
-(require 'init-which-key)
-
-(require 'init-undo-tree)
-
-(require 'init-evil)
-
-(require 'init-magit)
-
-(require 'init-treemacs)
-
-(require 'init-pdf-tools)
-
-
-(require 'init-keybindings)

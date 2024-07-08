@@ -15,3 +15,7 @@ straight
 quelpa
 custom.el
 .dap-breakpoints
+.DS_Store
+**/*/.DS_Store
+codeium
+**/*/codeium

@@ -60,7 +60,6 @@
    (dockerfile-mode . lsp-deferred)
    (vue-mode . lsp-deferred)
    (web-mode . lsp-deferred)
-   (lsp-mode . lsp-enable-which-key-integration)
    )
   :config
   (setq company-minimum-prefix-length 1)
@@ -142,7 +141,5 @@
   ;;                       :server-id 'ember-language-server)))
   ;; or
   (add-to-list 'lsp-file-watch-ignored-files "[/\\\\]\\.*\\'"))
-
-
 
 (provide 'init-lsp-mode)

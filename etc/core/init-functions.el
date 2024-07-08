@@ -1,4 +1,4 @@
-;;; init-funcs.el --- Load the full configuration -*- lexical-binding: t -*-
+;;; init-functions.el --- Load the full configuration -*- lexical-binding: t -*-
 ;;; Commentary:
 
 ;; This file bootstraps the configuration, which is divided into
@@ -38,4 +38,4 @@
   (kill-this-buffer))
 
 
-(provide 'init-funcs)
+(provide 'init-functions)

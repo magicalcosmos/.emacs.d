@@ -16,12 +16,12 @@
 :commands web-mode
 :mode (
   ("\\.html?\\'" . web-mode)
-  ("\\.tsx?\\'" . web-mode);;  会自动格式化，有问题
-  ("\\.jsx?\\'" . web-mode)
+  ("\\.ts\\'" . web-mode)  ;;  会自动格式化，有问题
+  ("\\.tsx\\'" . web-mode)
+  ("\\.jsx\\'" . web-mode)
   ("\\.vue?\\'" . web-mode)
-  ;; ("\\.scss\\'" . web-mode)
-  ;; ("\\.css\\'" . web-mode)
-  ("\\.json\\'" . web-mode)
+  ("\\.scss\\'" . web-mode)
+  ("\\.css\\'" . web-mode)
 )
 :config
   (setq web-mode-markup-indent-offset 2)
@@ -39,24 +39,22 @@
   (setq web-mode-enable-current-element-highlight t)
   (setq web-mode-enable-current-column-highlight t)
   (setq web-mode-enable-auto-indentation nil)
-  (local-set-key (kbd "RET") 'newline-and-indent)
 
 ;; typescript
    (setq web-mode-attr-indent-offset nil)
    (setq web-mode-tag-auto-close-style 2)
    (setq web-mode-enable-auto-closing t)
-   (setq tab-width 2)
+   (setq tab-width 1)
    
 
 
   (setq web-mode-engines-alist '(("django"    . "\\.html\\'")))
   (setq web-mode-ac-sources-alist 
-    '(("css" . (ac-source-css-property ac-source-emmet-css-snippets))
-      ("scss" . (ac-source-css-property ac-source-emmet-css-snippets))
+    '(("css" . (ac-source-css-property))
       ("vue" . (ac-source-words-in-buffer ac-source-abbrev))
-      ("html" . (ac-source-words-in-buffer ac-source-abbrev ac-source-emmet-html-aliases ac-source-emmet-html-snippets))))
+      ("html" . (ac-source-words-in-buffer ac-source-abbrev))))
   (setq web-mode-enable-engine-detection t)
-  (setq web-mode-enable-auto-pairing t)
+  (setq web-mode-enable-auto-pairing nil)
   (setq web-mode-enable-auto-close-style t)
   (setq web-mode-enable-auto-quoting t) ; this fixes the quote problem I mentioned
   (add-hook 'css-mode-hook
@@ -74,4 +72,13 @@
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 
+  ;;  :config
+  ;;  (setq-default format-all-formatters '(("C"     (astyle "--mode=c"))
+  ;;                                        ("Shell" (shfmt "-i" "4" "-ci")))))
+;;  (eval-after-load 'format-all
+;;    '(add-hook 'java-mode-hook
+;;               (lambda() (setq format-all-formatters '(("Java" (astyle "--mode=java")))))))
+
+(setq-default typescript-indent-level 2)
+                                       
 (provide 'init-web)

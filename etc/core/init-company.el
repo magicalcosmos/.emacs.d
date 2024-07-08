@@ -14,7 +14,6 @@
 
 (use-package company
   :ensure t
-  :after lsp-mode
   :init
   (global-company-mode t)
   :bind (:map company-active-map
@@ -49,4 +48,3 @@
 (setq tab-always-indent 'complete)
 
 (provide 'init-company)
-

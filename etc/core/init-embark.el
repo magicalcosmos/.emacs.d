@@ -22,6 +22,7 @@
 
 (setq prefix-help-command 'embark-prefix-help-command)
 
+
 ;; Consult users will also want the embark-consult package.
 (use-package embark-consult
   :ensure t
@@ -31,5 +32,6 @@
   ;; auto-updating embark collect buffer
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
+  
 
 (provide 'init-embark)

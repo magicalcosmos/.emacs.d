@@ -1,4 +1,15 @@
+;;; init-marginalia.el --- Load the full configuration -*- lexical-binding: t -*-
+;;; Commentary:
 ;; 在vertico中的minibuffer可进行模糊搜索
+;; This file bootstraps the configuration, which is divided into
+;; a number of other files.
+
+;;; Code:
+
+;; Produce backtraces when errors occur: can be helpful to diagnose startup issues
+;;(setq debug-on-error t)
+
+;; Author: brodyliao
 
 (use-package orderless
   :ensure t
