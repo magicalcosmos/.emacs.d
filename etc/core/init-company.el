@@ -13,26 +13,19 @@
 ;; Author: brodyliao
 
 (use-package company
-  :ensure t
-  :init
-  (global-company-mode t)
-  :bind (:map company-active-map
-	      ("C-n" . 'company-select-next)
-	      ("C-p" . 'company-select-previous))
-  :config
-    ;; Number the candidates (use M-1, M-2 etc to select completions).
-    (setq company-show-numbers t)
-    ;; Trigger completion immediately.
-    (setq company-minimum-prefix-length 1) ; 只需敲 1 个字母就开始进行自动补全
-    (setq company-tooltip-align-annotations t)
-    (setq company-idle-delay 0.0)
-    (setq company-selection-wrap-around t)
-    (setq company-transformers '(company-sort-by-occurrence))
-    ;; (setq company-backends
-    ;;     `((:separate company-files company-capf company-keywords )
-    ;;       (:separate company-abbrev company-dabbrev)))
-    ;; ) ; 根据选择的频率进行排序，读者如果不喜欢可以去掉)
-)
+    :defer 0.1
+    :config
+    (global-company-mode t)
+    (setq-default
+        company-idle-delay 0.05
+        company-require-match nil
+        company-minimum-prefix-length 0
+
+        ;; get only preview
+        company-frontends '(company-preview-frontend)
+        ;; also get a drop down
+        ;; company-frontends '(company-pseudo-tooltip-frontend company-preview-frontend)
+        ))
 ;; With use-package:
 ;; (use-package company-box
 ;;   :ensure t
@@ -46,5 +39,10 @@
   (company-prescient-mode))
 
 (setq tab-always-indent 'complete)
+
+;; 配置 company-mode 以使用 Codeium
+(with-eval-after-load 'company
+  (add-to-list 'company-backends 'codeium-company))
+
 
 (provide 'init-company)

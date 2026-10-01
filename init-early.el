@@ -15,7 +15,7 @@
 
 (require 'init-basic)
 
-(require 'init-company)
+;; (require 'init-company)
 
 (require 'init-codeium)
 
@@ -31,9 +31,9 @@
 
 (require 'init-marginalia)
 
-(require 'init-consult)
-
 (require 'init-embark)
+
+(require 'init-consult)
 
 (require 'init-undo-tree)
 
@@ -43,4 +43,4 @@
 
 (require 'init-web)
 
-(require 'init-lsp-mode)
+;; (require 'init-lsp-mode)
