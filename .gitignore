@@ -6,6 +6,7 @@ straight
 var
 .cache
 recentf
+recentf.eld
 history
 transient
 places
