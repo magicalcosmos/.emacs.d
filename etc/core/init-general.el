@@ -1,3 +1,4 @@
+;;; init-general.el --- Leader key 前缀定义 -*- lexical-binding: t -*-
 (use-package general
   :ensure t
   :config

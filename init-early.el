@@ -17,8 +17,6 @@
 
 ;; (require 'init-company)
 
-(require 'init-codeium)
-
 (require 'init-corfu)
 
 (require 'init-evil)
@@ -43,4 +41,8 @@
 
 (require 'init-web)
 
-;; (require 'init-lsp-mode)
+(require 'init-claude)
+
+(require 'init-lsp-mode)
+
+(require 'init-java)

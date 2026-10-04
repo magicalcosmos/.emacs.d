@@ -1,4 +1,3 @@
-
 ;;; init-corfu --- Load the full configuration -*- lexical-binding: t -*-
 ;;; Commentary:
 
@@ -15,9 +14,11 @@
 
 (use-package corfu
   ;; Optional customizations
-  ;; :custom
-  ;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
-  ;; (corfu-auto t)                 ;; Enable auto completion
+  :custom
+  (corfu-cycle t)                  ;; Enable cycling for `corfu-next/previous'
+  (corfu-auto t)                   ;; 输入时自动弹出补全
+  (corfu-auto-delay 0.15)          ;; 自动弹出延迟
+  (corfu-auto-prefix 2)            ;; 输入 2 个字符后开始补全
   ;; (corfu-separator ?\s)          ;; Orderless field separator
   ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
   ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match

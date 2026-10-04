@@ -1,4 +1,3 @@
-
 ;;; init-ace-window.el --- Load the full configuration -*- lexical-binding: t -*-
 ;;; Commentary:
 

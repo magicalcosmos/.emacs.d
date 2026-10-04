@@ -1,44 +1,16 @@
-
+;;; init-lsp-mode.el --- LSP 补全/跳转 -*- lexical-binding: t -*-
 (use-package lsp-mode
   :ensure t
   :custom
-  (lsp-enable-snippet t)
+  ;; 新版 lsp-mode 已移除 company 集成，纯 completion-at-point，与 corfu 天然配合
+  (lsp-enable-snippet nil)         ;; 未安装 yasnippet，关闭 snippet 候选
   (lsp-keep-workspace-alive t)
   (lsp-enable-xref t)
   (lsp-enable-imenu t)
-  (lsp-enable-completion-at-point t)
-  (lsp-eldoc-hook nil)
-  
-  ;; what to use when checking on-save. "check" is default, I prefer clippy
-  (lsp-rust-analyzer-cargo-watch-command "clippy")
   (lsp-eldoc-render-all t)
   (lsp-idle-delay 0.500)
-  ;; enable / disable the hints as you prefer:
-  (lsp-rust-analyzer-server-display-inlay-hints t)
-  (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
-  (lsp-rust-analyzer-display-chaining-hints t)
-  (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names nil)
-  (lsp-rust-analyzer-display-closure-return-type-hints t)
-  (lsp-rust-analyzer-display-parameter-hints nil)
-  (lsp-rust-analyzer-display-reborrow-hints nil)
-  (lsp-completion-provider :none) ;; 阻止 lsp 重新设置 company-backend 而覆盖我们 yasnippet 的设置
+  (lsp-rust-analyzer-cargo-watch-command "clippy")
   (lsp-headerline-breadcrumb-enable t)
-  (lsp-treemacs-sync-mode 1)
-  (lsp-completion-enable nil)
-
-  ;; js
-  (lsp-javascript-suggest-complete-js-docs nil)
-  (lsp-javascript-auto-closing-tags nil)
-  (lsp-javascript-suggest-enabled nil)
-  (lsp-javascript-suggest-auto-imports nil)
-  (lsp-Javascript-suggestion-actions-enabled nil)
-  ;; ts
-  (lsp-typescript-auto-closing-tags nil)
-  (lsp-typescript-suggest-auto-imports nil)
-  (lsp-typescript-suggest-enabled nil)
-  (lsp-typescript-suggest-complete-js-docs nil)
-  (lsp-typescript-suggestion-actions-enabled nil)
-
   :bind (
     ("C-c l" . lsp-command-map)
     ("C-c d" . lsp-describe-thing-at-point)
@@ -55,15 +27,20 @@
    (c-mode . lsp-deferred)
    (js-jsx-mode . lsp-deferred)
    (typescript-mode . lsp-deferred)
-   (ymal-mode . lsp-deferred)
+   (yaml-mode . lsp-deferred)
    (shell-mode . lsp-deferred)
    (dockerfile-mode . lsp-deferred)
    (vue-mode . lsp-deferred)
    (web-mode . lsp-deferred)
    )
   :config
-  (setq company-minimum-prefix-length 1)
   (setq lsp-idle-delay 0.500)
+  ;; evil 下用 LSP 跳转替代默认的 gd（evil-jump-to-definition 走 tags，不识别模块路径）
+  (with-eval-after-load 'evil
+    (evil-define-key 'normal lsp-mode-map
+      "gd" #'lsp-find-definition
+      "gr" #'lsp-find-references
+      "K"  #'lsp-describe-thing-at-point))
   (setq lsp-log-io nil)  ;; Don't log everything = speed
   (setq lsp-keymap-prefix "C-c l")
   (setq lsp-restart 'auto-restart)
@@ -83,8 +60,7 @@
   :ensure t
   :custom-face
   (lsp-ui-doc-background ((t (:background unspecified))))
-  :init (setq lsp-enable-snippet nil
-              lsp-ui-sideline-enable nil
+  :init (setq lsp-ui-sideline-enable nil
               lsp-ui-peek-enable nil
               lsp-ui-doc-enable t
               lsp-ui-doc-position              'at-point

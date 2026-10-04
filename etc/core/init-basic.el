@@ -1,4 +1,3 @@
-
 ;;; init-basic.el --- Load the full configuration -*- lexical-binding: t -*-
 ;;; Commentary:
 

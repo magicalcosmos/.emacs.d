@@ -1,3 +1,4 @@
+;;; init-treemacs.el --- 文件树 -*- lexical-binding: t -*-
 (use-package treemacs
   :ensure t
   :defer t
@@ -74,16 +75,25 @@
       (`(t . _)
        (treemacs-git-mode 'simple)))
 
-    (treemacs-hide-gitignored-files-mode nil))
+    ;; C-x t t 打开文件树时自动定位当前文件；项目不在 workspace 时先添加
+    (defun my/treemacs-open-and-follow ()
+      "打开文件树并定位到当前文件."
+      (interactive)
+      (if (buffer-file-name)
+          (if (treemacs--find-project-for-path (buffer-file-name))
+              (treemacs-find-file)
+            (treemacs-add-and-display-current-project))
+        (treemacs)))
+    )
   :bind
-  (:map global-map
-        ("C-0"       . treemacs-select-window)
-        ("C-x t 1"   . treemacs-delete-other-windows)
-        ("C-x t t"   . treemacs)
-        ("C-x t d"   . treemacs-select-directory)
-        ("C-x t B"   . treemacs-bookmark)
-        ("C-x t C-t" . treemacs-find-file)
-        ("C-x t M-t" . treemacs-find-tag)))
+    (:map global-map
+          ("C-0"       . treemacs-select-window)
+          ("C-x t 1"   . treemacs-delete-other-windows)
+          ("C-x t t"   . my/treemacs-open-and-follow)
+          ("C-x t d"   . treemacs-select-directory)
+          ("C-x t B"   . treemacs-bookmark)
+          ("C-x t C-t" . treemacs-find-file)
+          ("C-x t M-t" . treemacs-find-tag)))
 
 (use-package treemacs-evil
   :after (treemacs evil)

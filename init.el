@@ -16,6 +16,12 @@
 (setenv "PATH" (concat "/usr/local/bin:/opt/homebrew/bin:" (getenv "PATH")))
 (setq exec-path (append exec-path '("/usr/local/bin" "/opt/homebrew/bin")))
 
+;; volta（Node 版本管理器）的工具路径：typescript-language-server 等
+(let ((volta-bin (expand-file-name "~/.volta/bin")))
+  (when (file-directory-p volta-bin)
+    (setenv "PATH" (concat volta-bin ":" (getenv "PATH")))
+    (add-to-list 'exec-path volta-bin)))
+
 (add-to-list 'load-path "~/.emacs.d/etc/core/")
 (add-to-list 'load-path "~/.emacs.d/etc/lisp/")
 (add-to-list 'load-path "~/.emacs.d/theme/")

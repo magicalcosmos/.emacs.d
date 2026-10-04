@@ -40,9 +40,4 @@
 
 (setq tab-always-indent 'complete)
 
-;; 配置 company-mode 以使用 Codeium
-(with-eval-after-load 'company
-  (add-to-list 'company-backends 'codeium-company))
-
-
 (provide 'init-company)
