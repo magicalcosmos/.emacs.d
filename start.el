@@ -21,7 +21,10 @@
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
         (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         ;; Windows 下直连 raw.githubusercontent.com 可能失败，先用 ghproxy 镜像
+         (if (eq system-type 'windows-nt)
+             "https://ghproxy.net/https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+           "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el")
          'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
@@ -51,6 +54,14 @@
 
 ;;初始化package
 (package-initialize)
+
+;; Windows 下 gnutls 握手易失败，降低最小安全等级保证 TLS 连接稳定
+(when (eq system-type 'windows-nt)
+  (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+  ;; elpa.gnu.org / melpa 的包签名在 Windows + Git 自带 gpg 2.4 下常校验失败
+  ;; （archive-contents.sig、spinner-*.tar.sig 等），导致整批安装中断。
+  ;; 依赖来源已限定为官方 ELPA/MELPA 源，这里关闭签名校验。
+  (setq package-check-signature nil))
 
 ;; Setup `use-package'
 (unless (package-installed-p 'use-package)

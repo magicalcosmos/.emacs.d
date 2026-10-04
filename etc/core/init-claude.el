@@ -36,9 +36,12 @@
     (when (executable-find "notify-send")
       (call-process "notify-send" nil nil nil title message)))
    ((eq system-type 'windows-nt)
-    (call-process "powershell" nil nil nil
-                  "-Command"
-                  (format "[Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] | Out-Null; $x=[Windows.UI.Notifications.ToastNotificationManager]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText02); $t=[windows.ui.notifications.toastnotifier]::GetDefault(); $x.GetElementsByTagName('text').Item(0).AppendChild($x.CreateTextNode('%s'))|Out-Null; $x.GetElementsByTagName('text').Item(1).AppendChild($x.CreateTextNode('%s'))|Out-Null; $t.Show([Windows.UI.Notifications.ToastNotification]::new($x))" title message)))))
+    ;; PowerShell toast 通知；引号转义防止特殊字符破坏脚本
+    (let ((ps-script
+           (format "[Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] | Out-Null; $x=[Windows.UI.Notifications.ToastNotificationManager]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText02); $t=[windows.ui.notifications.toastnotifier]::GetDefault(); $x.GetElementsByTagName('text').Item(0).AppendChild($x.CreateTextNode('%s'))|Out-Null; $x.GetElementsByTagName('text').Item(1).AppendChild($x.CreateTextNode('%s'))|Out-Null; $t.Show([Windows.UI.Notifications.ToastNotification]::new($x))"
+                   (replace-regexp-in-string "'" "''" title)
+                   (replace-regexp-in-string "'" "''" message))))
+      (call-process "powershell" nil nil nil "-NoProfile" "-Command" ps-script)))))
 
 ;; claude-code.el 本体，:depth 1 减少下载体积
 (use-package claude-code
