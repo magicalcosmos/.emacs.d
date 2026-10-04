@@ -23,3 +23,5 @@ codeium
 **/*/codeium
 # treemacs 的持久化目录（init-basic.el 里由 CACHE-DIR 创建）
 cache
+# tramp 连接历史，每次远程编辑都会重写时间戳
+tramp
