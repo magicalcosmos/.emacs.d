@@ -16,16 +16,24 @@
 (defconst *is-linux* (eq system-type 'gnu/linux))
 (defconst *is-windows* (or (eq system-type 'ms-dos)(eq system-type 'windows-nt)))
 (defconst CACHE-DIR (expand-file-name "cache/" user-emacs-directory))
+;; 确保缓存目录存在（undo-tree、treemacs 等会写入）
+(make-directory CACHE-DIR t)
 
-(setq gc-cons-threshold most-positive-fixnum)
+;; 启动期关 GC 以加快加载，emacs-startup-hook 里恢复。
+;; 注意 batch 模式下 startup-hook 不会执行，阈值会一直停在 most-positive-fixnum，
+;; 运行期 GC 全废、补全产生的垃圾无法回收，Emacs 用久了会明显变慢。
+;; 因此这里直接给出运行期阈值，不依赖 hook。
+(defconst my/gc-cons-threshold (* 64 1024 1024))
+(defconst my/gc-cons-percentage 0.1)
 
-
+(setq gc-cons-threshold most-positive-fixnum
+      gc-cons-percentage my/gc-cons-percentage)
 
 (add-hook 'emacs-startup-hook
           (lambda ()
             "Recover GC values after startup."
-            (setq gc-cons-threshold 100000000
-                  gc-cons-percentage 0.1)))
+            (setq gc-cons-threshold my/gc-cons-threshold
+                  gc-cons-percentage my/gc-cons-percentage)))
 ; gain the emacs default is too low 4k considering that the some of the language server responses are in 800k - 3M range                 
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 
@@ -56,6 +64,11 @@
 
 ;; 设置 Emacs 的缺省工作路径
 (setq default-directory "~/")
+;; Windows 下 ~/ 展开为 C:/Users/<用户名>/，EPG/GnuPG 等也依赖 HOME；
+;; Emacs GUI 启动时 HOME 可能未设置，显式指定避免路径歧义
+(when *is-windows*
+  (unless (getenv "HOME")
+    (setenv "HOME" (getenv "USERPROFILE"))))
 
 ;; Disable visible scrollbar
 (scroll-bar-mode -1)
@@ -103,8 +116,15 @@
 
 (setq default-buffer-file-coding-system 'utf-8)
 
-;; Set font size 180 = 18pt
-(set-face-attribute 'default nil :height 160)
+;; 字体大小 160 = 16pt；Windows 下西文/中文分别指定字体
+(if *is-windows*
+    (progn
+      ;; 缓解中文字体渲染导致的卡顿
+      (setq inhibit-compacting-font-caches t)
+      (set-face-attribute 'default nil :family "Consolas" :height 160)
+      (dolist (charset '(han cjk-misc bopomofo kana hangul))
+        (set-fontset-font t charset (font-spec :family "Microsoft YaHei" :height 160))))
+  (set-face-attribute 'default nil :height 160))
 
 
 (require 'recentf)

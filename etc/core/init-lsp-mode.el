@@ -8,7 +8,11 @@
   (lsp-enable-xref t)
   (lsp-enable-imenu t)
   (lsp-eldoc-render-all t)
-  (lsp-idle-delay 0.500)
+  (lsp-idle-delay 0.300)
+  ;; 不复用上一次的候选结果。注意：ts-ls 对 `.value' 仍会返回全量符号表
+  ;; （实测 1007 个候选），此选项只影响 Emacs 侧缓存复用，不减少单次返回量；
+  ;; 真正的过滤发生在 corfu/orderless 层。过滤开销是否为主要瓶颈尚未实测。
+  (lsp-completion-use-last-result nil)
   (lsp-rust-analyzer-cargo-watch-command "clippy")
   (lsp-headerline-breadcrumb-enable t)
   :bind (
@@ -33,7 +37,7 @@
    (dockerfile-mode . lsp-deferred)
    )
   :config
-  (setq lsp-idle-delay 0.500)
+  (setq lsp-idle-delay 0.300)
   ;; evil 下用 LSP 跳转替代默认的 gd（evil-jump-to-definition 走 tags，不识别模块路径）
   (with-eval-after-load 'evil
     (evil-define-key 'normal lsp-mode-map
