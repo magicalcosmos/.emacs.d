@@ -84,6 +84,41 @@
               (treemacs-find-file)
             (treemacs-add-and-display-current-project))
         (treemacs)))
+
+    ;; E：在系统文件管理器中定位光标下的文件/目录（打开所在位置并选中）
+    (defun my/treemacs-reveal-in-explorer ()
+      "Reveal the file at point in the system file manager."
+      (interactive)
+      (if-let* ((btn (treemacs-current-button))
+                (path (treemacs--nearest-path btn)))
+          (pcase system-type
+            ('windows-nt
+             ;; explorer /select, 对参数格式极挑剔（start-process 会把含引号
+             ;; 参数转义、部分 Win11 场景直接忽略），改用 Shell.Application
+             ;; COM 的 SelectItem，实测稳定。见 etc/lisp/reveal-in-explorer.ps1
+             (start-process "reveal-explorer" nil "powershell.exe"
+                            "-NoProfile" "-ExecutionPolicy" "Bypass"
+                            "-File" (expand-file-name
+                                     "etc/lisp/reveal-in-explorer.ps1"
+                                     user-emacs-directory)
+                            "-Path" path))
+            ('darwin
+             (shell-command (format "open -R %S" path)))
+            ('gnu/linux
+             (shell-command
+              (format "xdg-open %S" (directory-file-name (file-name-directory path))))))
+        (treemacs-pulse-on-failure "Nothing under point to reveal.")))
+
+    ;; 必须绑到 evil-treemacs-state-map 本体：treemacs state 启用了 motion
+    ;; state，普通 define-key / evil-define-key 辅助映射的 E/e 都会被
+    ;; evil 移动命令（move-end-of-line / forward-word-end）挡住，表现为按了
+    ;; 没反应。state map 本体优先级最高（treemacs-evil 的 j/k 也绑在这层）。
+    ;; e 原本的 treemacs-edit-workspaces 在 evil 下同样被挡，仍可用 M-x 调用。
+    (with-eval-after-load 'treemacs-evil
+      (define-key evil-treemacs-state-map
+                  (kbd "E") #'my/treemacs-reveal-in-explorer)
+      (define-key evil-treemacs-state-map
+                  (kbd "e") #'my/treemacs-reveal-in-explorer))
     )
   :bind
     (:map global-map
