@@ -13,16 +13,23 @@
 (use-package inheritenv
   :straight (:type git :host github :repo "purcell/inheritenv"))
 
-;; 终端后端：eat（纯 Elisp 终端模拟器，跨平台，无原生编译依赖）
-(use-package eat
+;; 终端后端：ghostel（libghostty 引擎，含原生 Windows ConPTY 支持；
+;; eat 在原生 Windows 上硬编码 /usr/bin/env 启动器导致 spawning 错误，已弃用）
+(use-package ghostel
   :straight (:type git
-                   :host codeberg
-                   :repo "akib/emacs-eat"
-                   :files ("*.el" ("term" "term/*.el") "*.texi"
-                           "*.ti" ("terminfo/e" "terminfo/e/*")
-                           ("terminfo/65" "terminfo/65/*")
-                           ("integration" "integration/*")
-                           (:exclude ".dir-locals.el" "*-tests.el"))))
+                   :host github
+                   :repo "dakra/ghostel"
+                   :files ("lisp/*.el" "etc" "extensions")
+                   :depth 1)
+  ;; 必须在 ghostel.el 加载前设置：它在文件加载顶层就按此目录加载原生模块；
+  ;; :custom 在 require 之后才生效，会导致加载瞬间回退到包目录而报 module not found
+  :init
+  ;; Windows GUI Emacs 通常没有 HOME，~ 会回退到 AppData/Roaming，
+  ;; 而模块在 C:/Users/<user>/.config 下，故锚定 USERPROFILE 而非 ~
+  (setq ghostel-module-directory
+        (if (eq system-type 'windows-nt)
+            (expand-file-name ".config/emacs/ghostel/" (getenv "USERPROFILE"))
+          (expand-file-name "~/.config/emacs/ghostel/"))))
 
 ;; 平台相关的桌面通知
 (defun my/claude-code-notify (title message)
@@ -48,7 +55,7 @@
   :straight (:type git :host github :repo "stevemolitor/claude-code.el" :branch "main" :depth 1
                    :files ("*.el" (:exclude "images/*")))
   :custom
-  (claude-code-terminal-backend 'eat) ; 跨平台终端后端
+  (claude-code-terminal-backend 'ghostel) ; libghostty 终端，Windows 原生支持
   (claude-code-notification-function #'my/claude-code-notify)
   :bind-keymap
   ("C-c c" . claude-code-command-map)
