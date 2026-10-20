@@ -65,4 +65,14 @@ at the front of `exec-path' avoids that."
                lsp-java-build-project))
   (autoload cmd "lsp-java" nil t))
 
+;; Java 调试：dap-mode（已随 package.el 装在 elpa/，不再重复装一份）。
+;; lsp-mode 启动时自动开 dap UI；dap-java 注册调试模板，
+;; 首次 M-x dap-debug 会联网下载 java-debug 适配器
+(use-package dap-mode
+  :ensure nil
+  :hook (lsp-mode . dap-auto-configure-mode)
+  :config
+  (with-eval-after-load 'lsp-java
+    (require 'dap-java)))
+
 (provide 'init-java)
