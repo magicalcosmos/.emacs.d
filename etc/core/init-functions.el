@@ -11,8 +11,10 @@
 
 ;; Author: brodyliao
 
+;; 仅在 Linux 下探测 Termux，避免 Windows/macOS 上调用不存在的 uname
 (setq bl/is-termux
-      (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a"))))
+      (and (eq system-type 'gnu/linux)
+           (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a")))))
 
 (defun bl/evil-hook ()
   (dolist (mode '(custom-mode

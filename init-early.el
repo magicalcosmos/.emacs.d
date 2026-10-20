@@ -11,6 +11,9 @@
 
 ;; Author: brodyliao
 
+;; Windows 下 evil 的 C-h 帮助等依赖 shell，避免启动时报 w32-notify 相关问题
+;; （如启动出错可临时打开 debug-on-error 定位）
+
 (require 'init-functions)
 
 (require 'init-basic)
@@ -46,3 +49,5 @@
 (require 'init-lsp-mode)
 
 (require 'init-java)
+
+(require 'init-magit)

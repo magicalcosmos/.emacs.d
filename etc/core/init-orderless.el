@@ -50,9 +50,11 @@
      ;; Ignore single !
      ((equal "!" word) `(orderless-literal . ""))
      ;; Prefix and suffix
-     ((if-let (x (assq (aref word 0) +orderless-dispatch-alist))
-          (cons (cdr x) (substring word 1))
-        (when-let (x (assq (aref word (1- (length word))) +orderless-dispatch-alist))
+     ;; Emacs 31 起 if-let / when-let 已废弃，改用带 * 的新宏。
+     ;; 语义一致：都把 VAR 绑定到 VALUE 的第一个非 nil 值。
+     ((if-let* ((x (assq (aref word 0) +orderless-dispatch-alist)))
+           (cons (cdr x) (substring word 1))
+        (when-let* ((x (assq (aref word (1- (length word))) +orderless-dispatch-alist)))
           (cons (cdr x) (substring word 0 -1)))))))
 
   ;; Define orderless style with initialism by default

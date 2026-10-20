@@ -55,7 +55,7 @@ init.el            入口：设置 PATH、load-path，加载以下文件
 | `init-java.el` | Java 开发（lsp-java / Eclipse JDT.ls） | 启用 |
 | `init-company.el` | company 补全前端 | 已注释（被 corfu 替代） |
 | `init-lsp-mode.el` | LSP 智能补全/跳转/诊断（lsp-mode + lsp-ui，配合 corfu） | 启用 |
-| `init-magit.el` | Magit | 未加载 |
+| `init-magit.el` | Magit + git-gutter+ / git-timemachine / blamer | 启用 |
 
 ---
 

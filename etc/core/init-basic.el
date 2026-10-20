@@ -76,6 +76,11 @@
 ;; Disable the toolbar
 (tool-bar-mode -1)
 
+;; 隐藏菜单栏。启动时已进入全屏（见上方 toggle-frame-fullscreen），
+;; 菜单栏只会占用顶部空间且在全屏下无用武之地。
+;; 需要临时呼出时用 M-` 或 (menu-bar-mode 1)。
+(menu-bar-mode -1)
+
 ;; activate line numbering in all buffers/modes
 (global-display-line-numbers-mode 1)
 
