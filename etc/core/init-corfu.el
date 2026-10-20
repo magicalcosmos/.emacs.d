@@ -16,7 +16,7 @@
   ;; Optional customizations
   :custom
   (corfu-cycle t)                  ;; Enable cycling for `corfu-next/previous'
-  (corfu-auto t)                   ;; 输入时自动弹出补全
+  (corfu-auto nil)                 ;; 关闭自动补全，保留手动补全和 LSP 跳转
   (corfu-auto-delay 0.15)          ;; 自动弹出延迟
   (corfu-auto-prefix 2)            ;; 输入 2 个字符后开始补全
   ;; (corfu-separator ?\s)          ;; Orderless field separator
