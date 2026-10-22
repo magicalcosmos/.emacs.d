@@ -53,13 +53,21 @@
   ;;   (define-key evil-insert-state-map (kbd "C-S-V") #'evil-paste-before) ; for WSL
   ;;   )
   ;; Vim 风格 :q：多窗口时关闭当前窗口；唯一窗口时只隐藏当前 buffer，
-  ;; 不退出 Emacs（避免误按 :q 直接关掉整个编辑器）
+  ;; 不退出 Emacs（避免误按 :q 直接关掉整个编辑器）。
+  ;; 只统计普通窗口：treemacs 等侧边窗口（side window）不算，否则会
+  ;; 误判为多窗口并触发 "Attempt to delete main window"。
   (defun my/evil-quit ()
     "Like Vim :q. Close the current window; bury buffer on the last window."
     (interactive)
-    (if (one-window-p)
-        (bury-buffer)
-      (delete-window)))
+    (let* ((ordinary (seq-filter
+                      (lambda (w) (null (window-parameter w 'window-side)))
+                      (window-list nil 'nomini)))
+           (others (seq-remove (lambda (w) (eq w (selected-window))) ordinary)))
+      (if others
+          (condition-case nil
+              (delete-window)
+            (error (bury-buffer)))
+        (bury-buffer))))
   (evil-ex-define-cmd "q" #'my/evil-quit)
   (evil-ex-define-cmd "wq" #'bl/save-and-kill-this-buffer)
 
