@@ -1,4 +1,17 @@
 ;;; init-treemacs.el --- 文件树 -*- lexical-binding: t -*-
+
+;; 必须在 treemacs 加载前把 `treemacs-python-executable' 指到一个真正可用的
+;; Python 3。treemacs 自带的探测只看文件是否存在，会误选 Windows Store 的
+;; 「应用执行别名」存根（WindowsApps\python3.exe），导致其异步 git 状态刷新
+;; 全部以退出码 49 失败。详见 init-python.el 的说明。
+;; `treemacs-python-executable' 是 defcustom，预先 setq 的值不会被其默认值
+;; 覆盖，所以这里在 use-package 之前赋值即可生效。
+;; 修复后 treemacs 加载时才能据此进入 'deferred git-mode（目录也显示 git
+;; 状态）；此前探测到的是存根，一直退化在 'simple 模式。
+(let ((python (bl/find-python3)))
+  (when python
+    (setq treemacs-python-executable python)))
+
 (use-package treemacs
   :ensure t
   :defer t

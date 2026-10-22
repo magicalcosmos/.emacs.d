@@ -18,6 +18,9 @@
 
 (require 'init-basic)
 
+;; 需要在其他包之前探测 Python 3（如 treemacs 依赖）
+(require 'init-python)
+
 ;; (require 'init-company)
 
 (require 'init-corfu)
