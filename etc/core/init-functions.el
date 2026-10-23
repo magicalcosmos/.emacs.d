@@ -35,9 +35,24 @@
 
 
 (defun bl/save-and-kill-this-buffer ()
+  "Save the current buffer and kill it.
+
+Bound to the Vim ex command `:wq' (see init-evil.el).
+
+With-editor buffers (magit 的提交/变基缓冲区等) need special handling:
+they are the \$EDITOR of an external process, so the buffer must be
+finished via `with-editor-finish' rather than killed -- killing it
+trips `with-editor-kill-buffer-noop', which errors out with
+\"Don't kill this buffer ...\" and leaves the commit unfinished.
+`with-editor-mode-map' remaps `evil-save-modified-and-close' to
+`with-editor-finish', but a custom ex command calling the functions
+directly bypasses that remap."
   (interactive)
-  (save-buffer)
-  (kill-this-buffer))
+  (if (bound-and-true-p with-editor-mode)
+      ;; with-editor-finish 的 FORCE 参数没有 optional，需显式传 nil
+      (with-editor-finish nil)
+    (save-buffer)
+    (kill-this-buffer)))
 
 
 (provide 'init-functions)
