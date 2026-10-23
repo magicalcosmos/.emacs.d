@@ -53,4 +53,7 @@
 
 (require 'init-java)
 
+;; JS/Electron 调试（dap-mode + js-debug 适配器）
+(require 'init-dap-js)
+
 (require 'init-magit)

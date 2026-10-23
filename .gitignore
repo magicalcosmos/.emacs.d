@@ -30,3 +30,5 @@ eclipse.jdt.ls/
 workspace/
 # bash 误将 Windows NUL 设备当文件创建的残留
 NUL
+# dap-mode 下载的调试适配器（js-debug 等），体积大且可再生
+.extension/
