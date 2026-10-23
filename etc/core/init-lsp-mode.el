@@ -15,6 +15,22 @@
   (lsp-completion-use-last-result nil)
   (lsp-rust-analyzer-cargo-watch-command "clippy")
   (lsp-headerline-breadcrumb-enable t)
+  ;; Windows 上默认的 tar 解压脚本会失败：lsp-mode 用
+  ;;   bash -c 'mkdir -p %2$s; tar xf %1$s --directory=%2$s'
+  ;; 其中路径是 "C:/Users/..." 形式，Git 自带的 MSYS tar 会把 "C:" 当成
+  ;; 远程主机名，报 "tar: Cannot connect to c: resolve failed"，解压静默失败。
+  ;; 改用 Windows 自带的 bsdtar（C:\Windows\System32\tar.exe，PATH 上
+  ;; executable-find "tar" 优先命中它），它认 "C:/" 路径；建目录交给
+  ;; PowerShell 的 New-Item（cmdproxy 不支持 cmd 的 && 连接符）。
+  ;; 影响面：所有经 lsp-download-install 下载的 VSCode 扩展
+  ;; （js-debug、chrome 调试适配器等）。
+  (lsp-tar-script
+   (lambda ()
+     (concat
+      "powershell -NoProfile -Command \""
+      "New-Item -ItemType Directory -Force -Path %2$s | Out-Null; "
+      "tar -xf %1$s -C %2$s"
+      "\"")))
   :bind (
     ("C-c l" . lsp-command-map)
     ("C-c d" . lsp-describe-thing-at-point)
