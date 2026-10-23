@@ -32,3 +32,5 @@ workspace/
 NUL
 # dap-mode 下载的调试适配器（js-debug 等），体积大且可再生
 .extension/
+# Emacs server 的运行时文件（记录客户端连接信息）
+server/
