@@ -39,6 +39,9 @@
 
 (require 'init-consult)
 
+;; 项目全局搜索（ripgrep / git grep / ag）
+(require 'init-search)
+
 (require 'init-undo-tree)
 
 (require 'init-ace-window)
