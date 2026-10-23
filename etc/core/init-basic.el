@@ -70,6 +70,23 @@
   (unless (getenv "HOME")
     (setenv "HOME" (getenv "USERPROFILE"))))
 
+;; Git 的全局配置位置
+;;
+;; Emacs 在 Windows 上把 HOME 设成 %APPDATA%（因为 user-emacs-directory
+;; 是 ~/.emacs.d/，Emacs 据此反推 ~）。而 git 在 Windows 上同样优先用
+;; HOME 去找全局 .gitconfig，于是它找的是 %APPDATA%\.gitconfig —— 那里
+;; 没有文件，git 便拿不到 user.email/user.name，提交时报：
+;;   unable to auto-detect email address (got 'Administrator@...(none)')
+;;
+;; 真正的全局配置在 %USERPROFILE%\.gitconfig。不要改 HOME（那会破坏
+;; user-emacs-directory 的定位），改用 GIT_CONFIG_GLOBAL 明确告诉 git
+;; 去哪找——该变量优先级高于 HOME 推导，Emacs 启动的每个 git 子进程
+;; （magit、git-gutter、LSP、终端里的 git）都会继承。
+(when *is-windows*
+  (let ((global-gitconfig (expand-file-name ".gitconfig" (getenv "USERPROFILE"))))
+    (when (file-exists-p global-gitconfig)
+      (setenv "GIT_CONFIG_GLOBAL" global-gitconfig))))
+
 ;; Disable visible scrollbar
 (scroll-bar-mode -1)
 
